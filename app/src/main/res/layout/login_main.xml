@@ -72,8 +72,25 @@
                 android:hint="아이디를 입력하세요."
                 android:layout_marginLeft="30dp" />
 
+
         </LinearLayout>
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/BtnCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="확인"
+                android:layout_gravity="right"
+                android:layout_marginLeft="310dp"
+                android:background="#E6E6E6"/>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -95,16 +112,18 @@
 
         </LinearLayout>
 
+
         <Button
+            android:id="@+id/BtnSignup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="회원가입"
             android:layout_marginLeft="25dp"
             android:layout_marginTop="30dp"
             android:layout_gravity="right"
-            android:layout_marginEnd="20dp"
-            android:background="#E6E6E6"
-            android:layout_marginRight="20dp" />
+            android:textColor="#C1BDBD"
+            android:background="#FFFCFC"
+            />
 
         <TextView
             android:layout_width="match_parent"

@@ -1,10 +1,11 @@
 package com.manlesscafe.cafe2;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
-import android.content.Intent;
 
 public class MainLogin extends Activity {
     public void onCreate(Bundle savesInstanceState) {
@@ -45,5 +46,16 @@ public class MainLogin extends Activity {
                 startActivity(intent);
             }
         });
+
+
+        Button BtnSignup = (Button) findViewById(R.id.BtnSignup);
+        BtnSignup.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainJoin.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 }

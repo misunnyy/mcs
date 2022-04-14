@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="30dp"
-            android:text="좌석현황 5/30"
+            android:text="좌석현황 "
             android:textColor="#000000"
             android:textSize="25dp"/>
 
@@ -57,7 +57,6 @@
         android:orientation="horizontal">
 
         <TableLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:stretchColumns="*">
@@ -65,132 +64,170 @@
             <TableRow>
 
                 <Button
+                    android:id="@+id/BtnTable5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/selector_selected"
                     android:layout_span="1"
                     android:layout_column="1"
-                    android:text="1" />
+                    android:text="5" />
 
                 <Button
+                    android:id="@+id/BtnTable6"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="2" />
+                    android:background="@drawable/selector_selected"
+                    android:text="6" />
 
                 <Button
+                    android:id="@+id/BtnTable7"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/selector_selected"
                     android:layout_column="3"
-                    android:text="3" />
+                    android:text="7" />
 
                 <Button
+                    android:id="@+id/BtnTable8"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/selector_selected"
+                    android:text="8" />
+
+                <Button
+                    android:id="@+id/BtnTable9"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selector_selected"
+                    android:text="9" />
+
+
+            </TableRow>
+
+            <TableRow>
+
+                <Button
+                    android:id="@+id/BtnTable4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selector_selected"
+                    android:layout_span="1"
                     android:text="4" />
 
                 <Button
+                    android:id="@+id/BtnTable10"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="5" />
-
-
-            </TableRow>
-
-            <TableRow>
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_span="1"
-                    android:text="1" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:background="@drawable/selector_selected"
                     android:layout_column="6"
-                    android:text="2" />
+                    android:text="10" />
 
             </TableRow>
 
             <TableRow>
 
                 <Button
+                    android:id="@+id/BtnTable3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/selector_selected"
                     android:layout_span="1"
-                    android:text="1" />
+                    android:text="3" />
 
                 <Button
+                    android:id="@+id/BtnTable14"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/selector_selected"
                     android:layout_column="2"
-                    android:text="2" />
+                    android:text="14" />
 
                 <Button
+                    android:id="@+id/BtnTable15"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/selector_selected"
                     android:layout_column="3"
-                    android:text="3" />
+                    android:text="15" />
 
                 <Button
+                    android:id="@+id/BtnTable16"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/selector_selected"
                     android:layout_column="4"
-                    android:text="4" />
+                    android:text="16" />
 
                 <Button
+                    android:id="@+id/BtnTable11"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/selector_selected"
                     android:layout_column="6"
-                    android:text="5" />
+                    android:text="11" />
 
             </TableRow>
 
             <TableRow>
 
                 <Button
+                    android:id="@+id/BtnTable2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/selector_selected"
                     android:layout_span="1"
-                    android:text="1" />
+                    android:text="2" />
 
                 <Button
+                    android:id="@+id/BtnTable17"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/selector_selected"
                     android:layout_column="2"
-                    android:text="2" />
+                    android:text="17" />
 
                 <Button
+                    android:id="@+id/BtnTable18"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/selector_selected"
                     android:layout_column="3"
-                    android:text="3" />
+                    android:text="18" />
 
                 <Button
+                    android:id="@+id/BtnTable19"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/selector_selected"
                     android:layout_column="4"
-                    android:text="4" />
+                    android:text="19" />
                 <Button
+                    android:id="@+id/BtnTable12"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/selector_selected"
                     android:layout_column="6"
-                    android:text="5" />
+                    android:text="12" />
 
             </TableRow>
 
             <TableRow>
 
                 <Button
+                    android:id="@+id/BtnTable1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/selector_selected"
                     android:layout_span="1"
                     android:text="1" />
 
                 <Button
+                    android:id="@+id/BtnTable13"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/selector_selected"
                     android:layout_column="6"
-                    android:text="2" />
+                    android:text="13" />
 
             </TableRow>
 
@@ -203,13 +240,14 @@
 
     <Button
         android:id="@+id/BtnChoice"
-        android:layout_width="match_parent"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="#62E7F8"
+        android:background="#87CEEB"
+        android:layout_gravity="center"
         android:rotationX="0"
         android:rotationY="0"
-        android:text="구매하기" />
+        android:text="선택하기" />
 
     <LinearLayout
         android:layout_width="match_parent"

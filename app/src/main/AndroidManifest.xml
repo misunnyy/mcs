@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.manlesscafe.cafe2">
 
+    <uses-permission android:name="android.permission.INTERNET" />  //인터넷 접근을 위한 추가
+
     <application
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -20,6 +23,10 @@
         <activity android:name=".MainEct"/>
         <activity android:name=".MainLogin"/>
         <activity android:name=".MainMap"/>
+        <activity android:name=".DaytimeActivity"/>
+        <activity android:name=".TicketBuyActivity"/>
+        <activity android:name=".MainJoin"/>
+
     </application>
 
 </manifest>
