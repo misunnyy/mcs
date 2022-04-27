@@ -25,8 +25,8 @@
         <activity android:name=".MainMap"/>
         <activity android:name=".DaytimeActivity"/>
         <activity android:name=".TicketBuyActivity"/>
-        <activity android:name=".MainJoin"/>
-
+        <activity android:name=".MainRegister"/>
+        <activity android:name=".MainMypage"/>
     </application>
 
 </manifest>

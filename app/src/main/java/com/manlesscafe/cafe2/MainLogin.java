@@ -1,61 +1,62 @@
 package com.manlesscafe.cafe2;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.EditText;
+import android.widget.Toast;
 
-public class MainLogin extends Activity {
-    public void onCreate(Bundle savesInstanceState) {
-        super.onCreate(savesInstanceState);
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainLogin extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.login_main);
+        findViews();
+    }
+    private EditText username;
+    private EditText password;
+    private Button login;
+    private Button register;
 
-        ImageButton BtnHome = (ImageButton) findViewById(R.id.BtnHome);
-        BtnHome.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-            }
-        });
+    private void findViews() {
+        username=(EditText) findViewById(R.id.username);
+        password=(EditText) findViewById(R.id.password);
+        login=(Button) findViewById(R.id.login);
+        register=(Button) findViewById(R.id.register);
 
-        ImageButton BtnReservation = (ImageButton) findViewById(R.id.BtnReservation);
-        BtnReservation.setOnClickListener(new View.OnClickListener() {
+        login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainReservation.class);
-                startActivity(intent);
+                String name=username.getText().toString();
+                System.out.println(name);
+                String pass=password.getText().toString();
+                System.out.println(pass);
+
+                Log.i("TAG",name+"_"+pass);
+                UserService uService=new UserService(MainLogin.this);
+                boolean flag=uService.login(name, pass);
+
+                if(flag){
+                    Log.i("TAG"," 로그인 성공");
+                    Toast.makeText(MainLogin.this, " 로그인 성공 ", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(MainLogin.this,MainMypage.class);
+                    startActivity(intent);
+                }else{
+                    Log.i("TAG"," 로그인 실패");
+                    Toast.makeText(MainLogin.this, " 로그인 실패 ", Toast.LENGTH_LONG).show();
+                }
             }
         });
-
-        ImageButton BtnMap = (ImageButton) findViewById(R.id.BtnMap);
-        BtnMap.setOnClickListener(new View.OnClickListener() {
-            @Override
+        register.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainMap.class);
+                Intent intent=new Intent(MainLogin.this,MainRegister.class);
                 startActivity(intent);
             }
         });
-
-        ImageButton BtnEct = (ImageButton) findViewById(R.id.BtnEct);
-        BtnEct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainEct.class);
-                startActivity(intent);
-            }
-        });
-
-
-        Button BtnSignup = (Button) findViewById(R.id.BtnSignup);
-        BtnSignup.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainJoin.class);
-                startActivity(intent);
-            }
-        });
-
-
     }
 }

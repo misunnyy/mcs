@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:context=".MainRegister">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/BtnReturn"
+            android:layout_width="30dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="25dp"
+            android:background="#FFFFFF"
+            android:scaleType="fitCenter"
+            android:src="@drawable/back" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="40dp"
+            android:gravity="center"
+            android:text="회원가입"
+            android:textSize="30dp"
+            android:textStyle="bold" />
+
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="1" >
+
+            <TableRow >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text=" 사용자 이름&#58;" />
+
+                <EditText
+                    android:id="@+id/usernameRegister"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:hint=" 사용자 이름을 입력하십시오&#33;&#33;&#33;" />
+            </TableRow>
+
+            <TableRow >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text=" 암호&#58;" />
+
+                <EditText
+                    android:id="@+id/passwordRegister"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:hint=" 암호를 입력하십시오&#33;&#33;&#33;" />
+            </TableRow>
+
+            <TableRow >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text=" 연령&#58;" />
+
+                <EditText
+                    android:id="@+id/ageRegister"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:hint=" 연령을 입력하십시오&#33;&#33;&#33;" />
+            </TableRow>
+
+            <TableRow >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text=" 성별&#58;"
+                    android:textSize="20dp" />
+
+                <RadioGroup
+                    android:id="@+id/sexRegister"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:checkedButton="@+id/woman"
+                    android:orientation="horizontal" >
+
+                    <RadioButton
+                        android:id="@+id/nan"
+                        android:text=" 남성"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content" />
+
+                    <RadioButton
+                        android:id="@id/woman"
+                        android:text=" 여성"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"/>
+                </RadioGroup>
+            </TableRow>
+
+            <TableRow >
+
+                <TextView />
+
+                <LinearLayout >
+                    <Button
+                        android:id="@+id/Register"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:text=" 등록" />
+                </LinearLayout>
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+</LinearLayout>

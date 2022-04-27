@@ -50,10 +50,29 @@ public class MainReservation extends Activity {
             }
         });
 
-        Button selectedBtn1;
 
-        final boolean[] selected = {false};
-        selectedBtn1 = findViewById(R.id.BtnTable1);
+
+        final int[19] selected = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19};
+        Button selectedBtn1 = findViewById(R.id.BtnTable1);
+        Button selectedBtn2 = findViewById(R.id.BtnTable2);
+        Button selectedBtn3 = findViewById(R.id.BtnTable3);
+        Button selectedBtn4 = findViewById(R.id.BtnTable4);
+        Button selectedBtn5 = findViewById(R.id.BtnTable5);
+        Button selectedBtn6 = findViewById(R.id.BtnTable6);
+        Button selectedBtn7 = findViewById(R.id.BtnTable7);
+        Button selectedBtn8 = findViewById(R.id.BtnTable8);
+        Button selectedBtn9 = findViewById(R.id.BtnTable9);
+        Button selectedBtn10 = findViewById(R.id.BtnTable10);
+        Button selectedBtn11 = findViewById(R.id.BtnTable11);
+        Button selectedBtn12 = findViewById(R.id.BtnTable12);
+        Button selectedBtn13 = findViewById(R.id.BtnTable13);
+        Button selectedBtn14 = findViewById(R.id.BtnTable14);
+        Button selectedBtn15 = findViewById(R.id.BtnTable15);
+        Button selectedBtn16 = findViewById(R.id.BtnTable16);
+        Button selectedBtn17 = findViewById(R.id.BtnTable17);
+        Button selectedBtn18 = findViewById(R.id.BtnTable18);
+        Button selectedBtn19 = findViewById(R.id.BtnTable19);
+
         selectedBtn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,15 +80,17 @@ public class MainReservation extends Activity {
                 if(selected[0]){
                     selectedBtn1.setSelected(false);
                     selected[0] = false;
+                    selectedBtn2.setEnabled(true);
                 }
                 else{
                     selectedBtn1.setSelected(true);
                     selected[0] = true;
+                    selectedBtn2.setEnabled(false);
                 }
             }
         });
 
-        View selectedBtn2 = findViewById(R.id.BtnTable2);
+        //Button selectedBtn2 = findViewById(R.id.BtnTable2);
         selectedBtn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +106,7 @@ public class MainReservation extends Activity {
             }
         });
 
-        View selectedBtn3 = findViewById(R.id.BtnTable3);
+
         selectedBtn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,7 +121,7 @@ public class MainReservation extends Activity {
                 }
             }
         });
-        View selectedBtn4 = findViewById(R.id.BtnTable4);
+
         selectedBtn4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,7 +136,7 @@ public class MainReservation extends Activity {
                 }
             }
         });
-        View selectedBtn5 = findViewById(R.id.BtnTable5);
+
         selectedBtn5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,7 +151,7 @@ public class MainReservation extends Activity {
                 }
             }
         });
-        View selectedBtn6 = findViewById(R.id.BtnTable6);
+
         selectedBtn6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,7 +166,7 @@ public class MainReservation extends Activity {
                 }
             }
         });
-        View selectedBtn7 = findViewById(R.id.BtnTable7);
+        //Button selectedBtn7 = findViewById(R.id.BtnTable7);
         selectedBtn7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -160,7 +181,7 @@ public class MainReservation extends Activity {
                 }
             }
         });
-        View selectedBtn8 = findViewById(R.id.BtnTable8);
+        //Button selectedBtn8 = findViewById(R.id.BtnTable8);
         selectedBtn8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -175,7 +196,7 @@ public class MainReservation extends Activity {
                 }
             }
         });
-        View selectedBtn9 = findViewById(R.id.BtnTable9);
+        //Button selectedBtn9 = findViewById(R.id.BtnTable9);
         selectedBtn9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -190,7 +211,7 @@ public class MainReservation extends Activity {
                 }
             }
         });
-        View selectedBtn10 = findViewById(R.id.BtnTable10);
+        //Button selectedBtn10 = findViewById(R.id.BtnTable10);
         selectedBtn10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -206,7 +227,7 @@ public class MainReservation extends Activity {
             }
         });
 
-        View selectedBtn11 = findViewById(R.id.BtnTable11);
+        //Button selectedBtn11 = findViewById(R.id.BtnTable11);
         selectedBtn11.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -221,7 +242,7 @@ public class MainReservation extends Activity {
                 }
             }
         });
-        View selectedBtn12 = findViewById(R.id.BtnTable12);
+        //Button selectedBtn12 = findViewById(R.id.BtnTable12);
         selectedBtn12.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -236,7 +257,7 @@ public class MainReservation extends Activity {
                 }
             }
         });
-        View selectedBtn13 = findViewById(R.id.BtnTable13);
+        //Button selectedBtn13 = findViewById(R.id.BtnTable13);
         selectedBtn13.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -251,7 +272,7 @@ public class MainReservation extends Activity {
                 }
             }
         });
-        View selectedBtn14 = findViewById(R.id.BtnTable14);
+        //Button selectedBtn14 = findViewById(R.id.BtnTable14);
         selectedBtn14.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -266,7 +287,7 @@ public class MainReservation extends Activity {
                 }
             }
         });
-        View selectedBtn15 = findViewById(R.id.BtnTable15);
+        //Button selectedBtn15 = findViewById(R.id.BtnTable15);
         selectedBtn15.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -281,7 +302,7 @@ public class MainReservation extends Activity {
                 }
             }
         });
-        View selectedBtn16 = findViewById(R.id.BtnTable16);
+        //Button selectedBtn16 = findViewById(R.id.BtnTable16);
         selectedBtn16.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -297,7 +318,7 @@ public class MainReservation extends Activity {
             }
         });
 
-        View selectedBtn17 = findViewById(R.id.BtnTable17);
+        //Button selectedBtn17 = findViewById(R.id.BtnTable17);
         selectedBtn17.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -312,7 +333,7 @@ public class MainReservation extends Activity {
                 }
             }
         });
-        View selectedBtn18 = findViewById(R.id.BtnTable18);
+        //Button selectedBtn18 = findViewById(R.id.BtnTable18);
         selectedBtn18.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -327,7 +348,7 @@ public class MainReservation extends Activity {
                 }
             }
         });
-        View selectedBtn19 = findViewById(R.id.BtnTable19);
+        //Button selectedBtn19 = findViewById(R.id.BtnTable19);
         selectedBtn19.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
