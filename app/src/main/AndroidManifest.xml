@@ -27,6 +27,8 @@
         <activity android:name=".TicketBuyActivity"/>
         <activity android:name=".MainRegister"/>
         <activity android:name=".MainMypage"/>
+        <activity android:name=".PayCompleteActivity"/>
+        <activity android:name=".InformationFindActivity" />
     </application>
 
 </manifest>

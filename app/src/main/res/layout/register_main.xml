@@ -31,98 +31,93 @@
             android:textSize="30dp"
             android:textStyle="bold" />
 
-        <TableLayout
-            android:layout_width="fill_parent"
+        <TextView
+            android:id="@+id/textView_username"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:stretchColumns="1" >
+            android:text="User_name" />
 
-            <TableRow >
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText_username" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text=" 사용자 이름&#58;" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="user_id"
+            android:id="@+id/textView_main_name" />
 
-                <EditText
-                    android:id="@+id/usernameRegister"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:hint=" 사용자 이름을 입력하십시오&#33;&#33;&#33;" />
-            </TableRow>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText_main_name" />
 
-            <TableRow >
+        <TextView
+            android:id="@+id/textView_main_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Password" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text=" 암호&#58;" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText_main_password" />
 
-                <EditText
-                    android:id="@+id/passwordRegister"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:hint=" 암호를 입력하십시오&#33;&#33;&#33;" />
-            </TableRow>
+        <TextView
+            android:id="@+id/textView_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User_Phone" />
 
-            <TableRow >
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText_phone" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text=" 연령&#58;" />
+        <TextView
+            android:id="@+id/textView_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User_email" />
 
-                <EditText
-                    android:id="@+id/ageRegister"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:hint=" 연령을 입력하십시오&#33;&#33;&#33;" />
-            </TableRow>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText_email" />
 
-            <TableRow >
+        <TextView
+            android:id="@+id/textView_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User_age" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text=" 성별&#58;"
-                    android:textSize="20dp" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText_age" />
 
-                <RadioGroup
-                    android:id="@+id/sexRegister"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:checkedButton="@+id/woman"
-                    android:orientation="horizontal" >
+        <TextView
+            android:id="@+id/textView_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User_gender" />
 
-                    <RadioButton
-                        android:id="@+id/nan"
-                        android:text=" 남성"
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText_gender" />
 
-                    <RadioButton
-                        android:id="@id/woman"
-                        android:text=" 여성"
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"/>
-                </RadioGroup>
-            </TableRow>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sign_Up"
+            android:id="@+id/button_main_insert" />
 
-            <TableRow >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:id="@+id/textView_main_result" />
 
-                <TextView />
-
-                <LinearLayout >
-                    <Button
-                        android:id="@+id/Register"
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:text=" 등록" />
-                </LinearLayout>
-            </TableRow>
-        </TableLayout>
     </LinearLayout>
 </LinearLayout>

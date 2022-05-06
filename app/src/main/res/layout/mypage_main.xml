@@ -50,9 +50,19 @@
         <ListView
             android:id="@+id/mypageList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="300dp" />
 
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:id="@+id/logout"
+            android:text="로그아웃"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="center"
+            android:background="#D7C0FF"
+            android:layout_marginTop="20dp"/>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
