@@ -69,7 +69,7 @@ public class MainEct extends Activity {
         ImageButton BtnMap = (ImageButton) findViewById(R.id.BtnMap);
         BtnMap.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainMap.class);
+                Intent intent = new Intent(getApplicationContext(), TicketBuyActivity.class);
                 startActivity(intent);
             }
         });

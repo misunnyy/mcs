@@ -4,11 +4,11 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,13 +26,15 @@ public class MainRegister extends AppCompatActivity {
     private static String TAG = "phptest";
 
     private EditText mEditTextName,mEditTextemail;
-    private EditText mEditTextpassword, mEditTextphone;
-    private EditText mEditTextusername, mEditTextage, mEditTextgender;
+    private EditText mEditTextpassword;
+    private EditText mEditTextusername;
 
     private Button button_main_insert;
     private TextView mTextViewResult;
 
-    String name;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,17 +44,22 @@ public class MainRegister extends AppCompatActivity {
         mEditTextName = (EditText)findViewById(R.id.editText_main_name);
         mEditTextpassword = (EditText)findViewById(R.id.editText_main_password);
         mTextViewResult = (TextView)findViewById(R.id.textView_main_result);
-        mEditTextphone = (EditText)findViewById(R.id.editText_phone);
+
 
         mEditTextemail = (EditText)findViewById(R.id.editText_email);
         mEditTextusername = (EditText)findViewById(R.id.editText_username);
-        mEditTextage = (EditText)findViewById(R.id.editText_age);
-        mEditTextgender = (EditText)findViewById(R.id.editText_gender);
 
 
 
-        mTextViewResult.setMovementMethod(new ScrollingMovementMethod());
 
+
+        ImageButton BtnReturn = (ImageButton) findViewById(R.id.BtnReturn);
+        BtnReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         Button buttonInsert = (Button)findViewById(R.id.button_main_insert);
         buttonInsert.setOnClickListener(new View.OnClickListener() {
@@ -61,28 +68,37 @@ public class MainRegister extends AppCompatActivity {
 
                 String name = mEditTextName.getText().toString();
                 String password = mEditTextpassword.getText().toString();
-                String phone = mEditTextphone.getText().toString();
                 String email = mEditTextemail.getText().toString();
                 String username = mEditTextusername.getText().toString();
-                String age = mEditTextage.getText().toString();
-                String gender = mEditTextgender.getText().toString();
-
                 InsertData task = new InsertData();
-                task.execute("http://" + IP_ADDRESS + "/insert.php", name,password,phone,email,username,age,gender);
+                task.execute("http://" + IP_ADDRESS + "/insert.php", name,password,email,username);
 
                 name = mEditTextName.getText().toString();
                 mEditTextName.setText("");
                 mEditTextpassword.setText("");
-                mEditTextphone.setText("");
                 mEditTextemail.setText("");
                 mEditTextusername.setText("");
-                mEditTextage.setText("");
-                mEditTextgender.setText("");
 
-                Toast.makeText(getApplicationContext(), "id : "+name +" 님의 회원가입이 완료 되었습니다.", Toast.LENGTH_LONG).show();
+                if (username.getBytes().length <= 0){
+                    Toast.makeText(getApplicationContext(), " 이름를 입력하세요.", Toast.LENGTH_LONG).show();
+                }
+                else if (name.getBytes().length <= 0) {
+                    Toast.makeText(getApplicationContext(), " 아이디을 입력하세요.", Toast.LENGTH_LONG).show();
+                }
+                else if (password.getBytes().length <= 0){
+                    Toast.makeText(getApplicationContext(), " 비밀번호를 입력하세요.", Toast.LENGTH_LONG).show();
+                }
+                else if (email.getBytes().length <= 0){
+                    Toast.makeText(getApplicationContext(), " 이메일를 입력하세요.", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "id : " + name + " 님의 회원가입이 완료 되었습니다.", Toast.LENGTH_LONG).show();
 
-                Intent intent = new Intent(MainRegister.this, MainLogin.class);
-                startActivity(intent);
+                    Intent intent = new Intent(MainRegister.this, MainLogin.class);
+                    //Intent intent1;
+                    intent.putExtra("name", name);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -107,7 +123,7 @@ public class MainRegister extends AppCompatActivity {
             super.onPostExecute(result);
 
             progressDialog.dismiss();
-            mTextViewResult.setText(result);
+
             Log.d(TAG, "POST response  - " + result);
         }
 
@@ -117,14 +133,11 @@ public class MainRegister extends AppCompatActivity {
 
             String name = (String)params[1];
             String password = (String)params[2];
-            String phone = (String)params[3];
-            String email = (String)params[4];
-            String username = (String)params[5];
-            String age = (String)params[6];
-            String gender = (String)params[7];
+            String email = (String)params[3];
+            String username = (String)params[4];
 
             String serverURL = (String)params[0];
-            String postParameters = "name=" + name + "&password=" + password +"&phone="+phone +"&email=" + email +"&username=" + username +"&age=" + age +"&gender=" + gender;
+            String postParameters = "name=" + name + "&password=" + password +"&email=" + email +"&username=" + username;
 
 
             try {

@@ -2,168 +2,194 @@ package com.manlesscafe.cafe2;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class TicketBuyActivity extends Activity {
-
-    Button btnBuy;
-
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreate(Bundle savesInstanceState) {
+        super.onCreate(savesInstanceState);
         setContentView(R.layout.ticket_buy);
+        Button BtnBuy = (Button)findViewById(R.id.BtnBuy);
 
-        ImageButton BtnReturn = (ImageButton) findViewById(R.id.BtnReturn);
-        BtnReturn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        TextView selecttime = (TextView)findViewById(R.id.selecttime);
+        Button[] seatnumButtons = new Button[5];
+        Integer[] seatnumBtnIDs = { R.id.BtnTimeTicket1,R.id.BtnTimeTicket3,R.id.BtnTimeTicket6,R.id.BtnTimeTicket9,R.id.BtnTimeTicket12};
+        //Integer [] selecttimes = {900,10800,21600,32400,43200};
 
 
-        btnBuy = (Button) findViewById(R.id.BtnBuy);
-
+        Button BtnTimeTicket1,BtnTimeTicket3, BtnTimeTicket6, BtnTimeTicket9,BtnTimeTicket12;
 
         final boolean[] selected = {false};
-        Button BtnTimeTicket1 = findViewById(R.id.BtnTimeTicket1);
-        Button BtnTimeTicket3 = findViewById(R.id.BtnTimeTicket3);
-        Button BtnTimeTicket6 = findViewById(R.id.BtnTimeTicket6);
-        Button BtnTimeTicket9 = findViewById(R.id.BtnTimeTicket9);
-        Button BtnTimeTicket12 = findViewById(R.id.BtnTimeTicket12);
+        BtnTimeTicket1 = findViewById(R.id.BtnTimeTicket1);
+        BtnTimeTicket3 = findViewById(R.id.BtnTimeTicket3);
+        BtnTimeTicket6 = findViewById(R.id.BtnTimeTicket6);
+        BtnTimeTicket9 = findViewById(R.id.BtnTimeTicket9);
+        BtnTimeTicket12 = findViewById(R.id.BtnTimeTicket12);
+
+        //Button[] numButtons = new Button[5];
+        //Integer[] numBtnIDs = { R.id.BtnTimeTicket1,R.id.BtnTimeTicket3,R.id.BtnTimeTicket6,R.id.BtnTimeTicket9,R.id.BtnTimeTicket12 };
+
+        //final int[] time = new int[]{1,3,6,9,12};
 
         BtnTimeTicket1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) { //15분 = 900초
 
-                if(selected[0]){
-                    BtnTimeTicket1.setSelected(false);
-                    selected[0] = false;
-                    BtnTimeTicket3.setEnabled(true);
-                    BtnTimeTicket6.setEnabled(true);
-                    BtnTimeTicket9.setEnabled(true);
-                    BtnTimeTicket12.setEnabled(true);
+                //time[1] = 900;
 
-                }
-                else{
-                    BtnTimeTicket1.setSelected(true);
-                    selected[0] = true;
-                    BtnTimeTicket3.setEnabled(false);
-                    BtnTimeTicket6.setEnabled(false);
-                    BtnTimeTicket9.setEnabled(false);
-                    BtnTimeTicket12.setEnabled(false);
-                }
             }
         });
 
-        //View TimeTicket3 = findViewById(R.id.BtnTimeTicket3);
         BtnTimeTicket3.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) { //3시간 = 10,800
 
-                if(selected[0]){
-                    BtnTimeTicket3.setSelected(false);
-                    selected[0] = false;
-                    BtnTimeTicket1.setEnabled(true);
-                    BtnTimeTicket6.setEnabled(true);
-                    BtnTimeTicket9.setEnabled(true);
-                    BtnTimeTicket12.setEnabled(true);
-                }
-                else{
-                    BtnTimeTicket3.setSelected(true);
-                    selected[0] = true;
-                    BtnTimeTicket1.setEnabled(false);
-                    BtnTimeTicket6.setEnabled(false);
-                    BtnTimeTicket9.setEnabled(false);
-                    BtnTimeTicket12.setEnabled(false);
-                }
+                //time[3] = 10800;
+
             }
         });
-        //View TimeTicket6 = findViewById(R.id.BtnTimeTicket6);
+
         BtnTimeTicket6.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {//6시간 = 21,600
 
-                if(selected[0]){
-                    BtnTimeTicket6.setSelected(false);
-                    selected[0] = false;
-                    BtnTimeTicket3.setEnabled(true);
-                    BtnTimeTicket1.setEnabled(true);
-                    BtnTimeTicket9.setEnabled(true);
-                    BtnTimeTicket12.setEnabled(true);
-                }
-                else{
-                    BtnTimeTicket6.setSelected(true);
-                    selected[0] = true;
-                    BtnTimeTicket3.setEnabled(false);
-                    BtnTimeTicket1.setEnabled(false);
-                    BtnTimeTicket9.setEnabled(false);
-                    BtnTimeTicket12.setEnabled(false);
-                }
+                //time[6] = 21600;
+
             }
         });
-        //View TimeTicket9 = findViewById(R.id.BtnTimeTicket9);
+
         BtnTimeTicket9.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {//9시간 = 32,400
 
-                if(selected[0]){
-                    BtnTimeTicket9.setSelected(false);
-                    selected[0] = false;
-                    BtnTimeTicket3.setEnabled(true);
-                    BtnTimeTicket6.setEnabled(true);
-                    BtnTimeTicket1.setEnabled(true);
-                    BtnTimeTicket12.setEnabled(true);
-                }
-                else{
-                    BtnTimeTicket9.setSelected(true);
-                    selected[0] = true;
-                    BtnTimeTicket3.setEnabled(false);
-                    BtnTimeTicket6.setEnabled(false);
-                    BtnTimeTicket1.setEnabled(false);
-                    BtnTimeTicket12.setEnabled(false);
-                }
+                //time[9] = 32400;
+
             }
         });
-       // View TimeTicket12 = findViewById(R.id.BtnTimeTicket12);
+
         BtnTimeTicket12.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) { //12시간 = 43,200
 
-                if(selected[0]){
-                    BtnTimeTicket12.setSelected(false);
-                    selected[0] = false;
-                    BtnTimeTicket3.setEnabled(true);
-                    BtnTimeTicket6.setEnabled(true);
-                    BtnTimeTicket9.setEnabled(true);
-                    BtnTimeTicket1.setEnabled(true);
-                }
-                else{
-                    BtnTimeTicket12.setSelected(true);
-                    selected[0] = true;
-                    BtnTimeTicket3.setEnabled(false);
-                    BtnTimeTicket6.setEnabled(false);
-                    BtnTimeTicket9.setEnabled(false);
-                    BtnTimeTicket1.setEnabled(false);
-                }
+                //time[12] = 43200;
+
             }
         });
 
-        Button BtnBuy = (Button) findViewById(R.id.BtnBuy);
+        for(int i=0;i<seatnumButtons.length;i++){
+            seatnumButtons[i] = (Button)findViewById(seatnumBtnIDs[i]);
+
+            final int index;
+            index = i;
+
+            seatnumButtons[index].setOnClickListener(new View.OnClickListener(){
+                public void onClick(View view){
+                    if (index == 0){
+                        BtnTimeTicket1.setSelected(true);
+                        BtnTimeTicket3.setSelected(false);
+                        BtnTimeTicket6.setSelected(false);
+                        BtnTimeTicket9.setSelected(false);
+                        BtnTimeTicket12.setSelected(false);
+                        selecttime.setText("15분"); //버튼 번호를 받아와 띄움
+                        selecttime.setTextColor(Color.BLUE);
+                        //Toast.makeText(getApplicationContext(),"15분을 선택하셨습니다.",Toast.LENGTH_SHORT).show();
+                    }
+                    else if(index == 1){
+                        BtnTimeTicket3.setSelected(true);
+                        BtnTimeTicket1.setSelected(false);
+                        BtnTimeTicket6.setSelected(false);
+                        BtnTimeTicket9.setSelected(false);
+                        BtnTimeTicket12.setSelected(false);
+                        selecttime.setText("3시간"); //버튼 번호를 받아와 띄움
+                        selecttime.setTextColor(Color.BLUE);
+                        //Toast.makeText(getApplicationContext(),"3시간을 선택하셨습니다.",Toast.LENGTH_SHORT).show();
+                    }
+                    else if(index == 2){
+                        BtnTimeTicket6.setSelected(true);
+                        BtnTimeTicket3.setSelected(false);
+                        BtnTimeTicket1.setSelected(false);
+                        BtnTimeTicket9.setSelected(false);
+                        BtnTimeTicket12.setSelected(false);
+                        selecttime.setText("6시간"); //버튼 번호를 받아와 띄움
+                        selecttime.setTextColor(Color.BLUE);
+                        //Toast.makeText(getApplicationContext(),"6시간을 선택하셨습니다.",Toast.LENGTH_SHORT).show();
+                    }
+                    else if(index == 3){
+                        BtnTimeTicket1.setSelected(false);
+                        BtnTimeTicket3.setSelected(false);
+                        BtnTimeTicket6.setSelected(false);
+                        BtnTimeTicket9.setSelected(true);
+                        BtnTimeTicket12.setSelected(false);
+                        selecttime.setText("9시간"); //버튼 번호를 받아와 띄움
+                        selecttime.setTextColor(Color.BLUE);
+                        //Toast.makeText(getApplicationContext(),"9시간을 선택하셨습니다.",Toast.LENGTH_SHORT).show();
+                    }
+                    else if(index == 4){
+                        BtnTimeTicket1.setSelected(false);
+                        BtnTimeTicket3.setSelected(false);
+                        BtnTimeTicket6.setSelected(false);
+                        BtnTimeTicket9.setSelected(false);
+                        BtnTimeTicket12.setSelected(true);
+                        selecttime.setText("12시간"); //버튼 번호를 받아와 띄움
+                        selecttime.setTextColor(Color.BLUE);
+                        //Toast.makeText(getApplicationContext(),"12시간을 선택하셨습니다.",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+
         BtnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (selected[0]) {
-                    Intent intent = new Intent(getApplicationContext(), PayCompleteActivity.class);
-                    startActivity(intent);
+                if(selecttime.length() <= 0) {
+                    Toast.makeText(getApplicationContext(),"결제시간을 선택하세요",Toast.LENGTH_SHORT).show();
                 }
-                else  {
-                    Toast.makeText(getApplicationContext(), "시간을 선택하세요", Toast.LENGTH_LONG).show();
-                }}
+                else{
+                    String time = selecttime.getText().toString();;
+                    Intent intent = new Intent(TicketBuyActivity.this, PayCompleteActivity.class);
+                    intent.putExtra("reservetime",time);
+                    startActivity(intent);
+
+                    Toast.makeText(getApplicationContext(),"결제완료",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        ImageButton BtnHome = (ImageButton) findViewById(R.id.BtnHome);
+        BtnHome.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ImageButton BtnUser = (ImageButton) findViewById(R.id.BtnUser);
+        BtnUser.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainLogin.class);
+                startActivity(intent);
+            }
+        });
+
+        ImageButton BtnReservation = (ImageButton) findViewById(R.id.BtnReservation);
+        BtnReservation.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainReservation.class);
+                startActivity(intent);
+            }
+        });
+
+        ImageButton BtnEct = (ImageButton) findViewById(R.id.BtnEct);
+        BtnEct.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainEct.class);
+                startActivity(intent);
+            }
         });
     }
 }

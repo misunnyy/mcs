@@ -29,6 +29,7 @@
         <activity android:name=".MainMypage"/>
         <activity android:name=".PayCompleteActivity"/>
         <activity android:name=".InformationFindActivity" />
+        <activity android:name=".UsageHistoryActivity"/>
     </application>
 
 </manifest>

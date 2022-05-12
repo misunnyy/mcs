@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,7 +22,7 @@ import java.net.URL;
 public class MainLogin extends AppCompatActivity {
 
     EditText name, password;
-    Button sign_in, sign_up;
+    Button sign_in, sign_up, find;
 
     char result2;
     private static String IP_ADDRESS = "10.0.2.2:81";
@@ -35,7 +36,7 @@ public class MainLogin extends AppCompatActivity {
         name = findViewById(R.id.ID);
         password = findViewById(R.id.PW);
 
-        sign_in = (Button)findViewById(R.id.sign_in);
+        sign_in = (Button) findViewById(R.id.sign_in);
         sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,11 +45,11 @@ public class MainLogin extends AppCompatActivity {
                 String PASSWORD = password.getText().toString();
 
                 InsertData task = new InsertData();
-                task.execute("http://" + IP_ADDRESS + "/login.php", NAME,PASSWORD);
-                Log.d("qq",NAME+PASSWORD);
+                task.execute("http://" + IP_ADDRESS + "/login.php", NAME, PASSWORD);
+                Log.d("qq", NAME + PASSWORD);
             }
         });
-        sign_up = (Button)findViewById(R.id.sign_up);
+        sign_up = (Button) findViewById(R.id.sign_up);
         sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,7 +57,45 @@ public class MainLogin extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        find = (Button) findViewById(R.id.find);
+        find.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainLogin.this, InformationFindActivity.class);
+                startActivity(intent);
+            }
+        });
+        //ImageButton BtnUser = (ImageButton)findViewById(R.id.BtnUser);
+        ImageButton BtnReservation = (ImageButton) findViewById(R.id.BtnReservation);
+        ImageButton BtnMap = (ImageButton)findViewById(R.id.BtnMap);
+        ImageButton BtnEct = (ImageButton)findViewById(R.id.BtnEct);
+
+
+
+        BtnReservation.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainReservation.class);
+                startActivity(intent);
+            }
+        });
+
+        BtnMap.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), TicketBuyActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        BtnEct.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainEct.class);
+                startActivity(intent);
+            }
+        });
+
     }
+
     class InsertData extends AsyncTask<String, Void, String> {
         ProgressDialog progressDialog;
 
@@ -67,32 +106,31 @@ public class MainLogin extends AppCompatActivity {
             progressDialog = ProgressDialog.show(MainLogin.this,
                     "Please Wait", null, true, true);
         }
+
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            Log.d("qq","\n\n"+result);
+            Log.d("qq", "\n\n" + result);
             progressDialog.dismiss();
             result2 = result.toString().charAt(0);
-            Log.d("qq","\n\n"+result2);
-            if(result2=='1')
-            {
+            Log.d("qq", "\n\n" + result2);
+            if (result2 == '1') {
                 Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(MainLogin.this, MainMypage.class);
                 startActivity(intent);
-            }
-            else
-            {
+            } else {
                 Toast.makeText(getApplicationContext(), "아이디 또는 비밀번호가 다릅니다. ", Toast.LENGTH_LONG).show();
             }
             Log.d(TAG, "POST response  - " + result);
         }
+
         @Override
         protected String doInBackground(String... params) {
-            String ID = (String)params[1];
-            String PW = (String)params[2];
+            String ID = (String) params[1];
+            String PW = (String) params[2];
 
-            String serverURL = (String)params[0];
-            serverURL = serverURL+"?" + "NAME=" + ID + "&PASSWORD=" + PW ;
+            String serverURL = (String) params[0];
+            serverURL = serverURL + "?" + "NAME=" + ID + "&PASSWORD=" + PW;
             try {
                 URL url = new URL(serverURL);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -106,10 +144,9 @@ public class MainLogin extends AppCompatActivity {
                 Log.d(TAG, "GET response code - " + responseStatusCode);
 
                 InputStream inputStream;
-                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
+                if (responseStatusCode == HttpURLConnection.HTTP_OK) {
                     inputStream = httpURLConnection.getInputStream();
-                }
-                else{
+                } else {
                     inputStream = httpURLConnection.getErrorStream();
                 }
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
@@ -118,7 +155,7 @@ public class MainLogin extends AppCompatActivity {
                 StringBuilder sb = new StringBuilder();
                 String line = null;
 
-                while((line = bufferedReader.readLine()) != null){
+                while ((line = bufferedReader.readLine()) != null) {
                     sb.append(line);
                 }
                 bufferedReader.close();

@@ -35,7 +35,7 @@
             android:id="@+id/textView_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="User_name" />
+            android:text="이름을 입력하세요" />
 
         <EditText
             android:layout_width="match_parent"
@@ -45,7 +45,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="user_id"
+            android:text="아이디를 입력하세요"
             android:id="@+id/textView_main_name" />
 
         <EditText
@@ -57,67 +57,31 @@
             android:id="@+id/textView_main_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Password" />
+            android:text="비밀번호를 입력하세요" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/editText_main_password" />
 
-        <TextView
-            android:id="@+id/textView_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="User_Phone" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editText_phone" />
 
         <TextView
             android:id="@+id/textView_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="User_email" />
+            android:text="이메일을 입력하세요" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/editText_email" />
 
-        <TextView
-            android:id="@+id/textView_age"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="User_age" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editText_age" />
-
-        <TextView
-            android:id="@+id/textView_gender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="User_gender" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editText_gender" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Sign_Up"
             android:id="@+id/button_main_insert" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:id="@+id/textView_main_result" />
 
     </LinearLayout>
 </LinearLayout>

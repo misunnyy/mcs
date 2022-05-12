@@ -53,4 +53,16 @@
         android:layout_marginTop="100dp"
         android:layout_gravity="center"
         android:text="찾기" />
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.4"
+        android:id="@+id/listView_main_list"/>
+
+    <TextView
+        android:id="@+id/textView_main_result"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.4" />
+
 </LinearLayout>

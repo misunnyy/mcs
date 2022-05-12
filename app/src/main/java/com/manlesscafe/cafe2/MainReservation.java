@@ -1,22 +1,38 @@
 package com.manlesscafe.cafe2;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.content.Intent;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class MainReservation extends Activity {
+    private static String IP_ADDRESS = "10.0.2.2:81";
+    private static String TAG = "db";
 
     Button btnchoice;
+    TextView selectnum;
 
     public void onCreate(Bundle savesInstanceState) {
         super.onCreate(savesInstanceState);
         setContentView(R.layout.reservation_main);
 
         btnchoice = (Button) findViewById(R.id.BtnChoice);
+        selectnum = (TextView)findViewById(R.id.selectnum);
 
         ImageButton BtnHome = (ImageButton) findViewById(R.id.BtnHome);
         BtnHome.setOnClickListener(new View.OnClickListener() {
@@ -34,14 +50,13 @@ public class MainReservation extends Activity {
             }
         });
 
-        ImageButton BtnMap = (ImageButton) findViewById(R.id.BtnMap);
-        BtnMap.setOnClickListener(new View.OnClickListener() {
+        ImageButton BtnPay = (ImageButton) findViewById(R.id.BtnPay);
+        BtnPay.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainMap.class);
+                Intent intent = new Intent(getApplicationContext(), TicketBuyActivity.class);
                 startActivity(intent);
             }
         });
-
 
         ImageButton BtnEct = (ImageButton) findViewById(R.id.BtnEct);
         BtnEct.setOnClickListener(new View.OnClickListener() {
@@ -50,11 +65,9 @@ public class MainReservation extends Activity {
                 startActivity(intent);
             }
         });
+        //final TextView[] selectednum = new TextView[19];
 
-
-
-        final boolean[] selected = {false};
-        Button selectedBtn1 = findViewById(R.id.BtnTable1);
+        /*Button selectedBtn1 = findViewById(R.id.BtnTable1);
         Button selectedBtn2 = findViewById(R.id.BtnTable2);
         Button selectedBtn3 = findViewById(R.id.BtnTable3);
         Button selectedBtn4 = findViewById(R.id.BtnTable4);
@@ -72,996 +85,149 @@ public class MainReservation extends Activity {
         Button selectedBtn16 = findViewById(R.id.BtnTable16);
         Button selectedBtn17 = findViewById(R.id.BtnTable17);
         Button selectedBtn18 = findViewById(R.id.BtnTable18);
-        Button selectedBtn19 = findViewById(R.id.BtnTable19);
+        Button selectedBtn19 = findViewById(R.id.BtnTable19);*/
 
-        selectedBtn1.setOnClickListener(new View.OnClickListener() {
+        Button[] numButtons = new Button[19];
+        Integer[] numBtnIDs = { R.id.BtnTable1,R.id.BtnTable2,R.id.BtnTable3,R.id.BtnTable4,R.id.BtnTable5,
+                R.id.BtnTable6,R.id.BtnTable7,R.id.BtnTable8,
+                R.id.BtnTable9,R.id.BtnTable10, R.id.BtnTable11,R.id.BtnTable12,
+                R.id.BtnTable13, R.id.BtnTable14, R.id.BtnTable15,R.id.BtnTable16,R.id.BtnTable17,R.id.BtnTable18,R.id.BtnTable19};
+
+        final boolean[] selected = {false};
+
+        for(int i=0;i<numButtons.length;i++) {
+            numButtons[i] = (Button) findViewById(numBtnIDs[i]);
+            final int index;
+            index = i;
+            numButtons[index].setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+                    if (index < 19) {
+                        selectnum.setText((index + 1) + "번"); //버튼 번호를 받아와 띄움
+                        selectnum.setTextColor(Color.BLUE);
+                        //numButtons.setSelected(Color.BLUE);
+                        //Toast.makeText(getApplicationContext(), (index+1)+"번 좌석을 선택하셨습니다.",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+
+        btnchoice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(selected[0]){
-                    selectedBtn1.setSelected(false);
-                    selected[0] = false;
-                    selectedBtn2.setEnabled(true);
-                    selectedBtn3.setEnabled(true);
-                    selectedBtn4.setEnabled(true);
-                    selectedBtn5.setEnabled(true);
-                    selectedBtn6.setEnabled(true);
-                    selectedBtn7.setEnabled(true);
-                    selectedBtn8.setEnabled(true);
-                    selectedBtn9.setEnabled(true);
-                    selectedBtn10.setEnabled(true);
-                    selectedBtn11.setEnabled(true);
-                    selectedBtn12.setEnabled(true);
-                    selectedBtn13.setEnabled(true);
-                    selectedBtn14.setEnabled(true);
-                    selectedBtn15.setEnabled(true);
-                    selectedBtn16.setEnabled(true);
-                    selectedBtn17.setEnabled(true);
-                    selectedBtn18.setEnabled(true);
-                    selectedBtn19.setEnabled(true);
-
-                }
-                else{
-                    selectedBtn1.setSelected(true);
-                    selected[0] = true;
-                    selectedBtn2.setEnabled(false);
-                    selectedBtn3.setEnabled(false);
-                    selectedBtn4.setEnabled(false);
-                    selectedBtn5.setEnabled(false);
-                    selectedBtn6.setEnabled(false);
-                    selectedBtn7.setEnabled(false);
-                    selectedBtn8.setEnabled(false);
-                    selectedBtn9.setEnabled(false);
-                    selectedBtn10.setEnabled(false);
-                    selectedBtn11.setEnabled(false);
-                    selectedBtn12.setEnabled(false);
-                    selectedBtn13.setEnabled(false);
-                    selectedBtn14.setEnabled(false);
-                    selectedBtn15.setEnabled(false);
-                    selectedBtn16.setEnabled(false);
-                    selectedBtn17.setEnabled(false);
-                    selectedBtn18.setEnabled(false);
-                    selectedBtn19.setEnabled(false);
-                }
-            }
-        });
-
-        //Button selectedBtn2 = findViewById(R.id.BtnTable2);
-        selectedBtn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(selected[0]){
-                    selectedBtn2.setSelected(false);
-                    selected[0] = false;
-                    selectedBtn1.setEnabled(true);
-                    selectedBtn3.setEnabled(true);
-                    selectedBtn4.setEnabled(true);
-                    selectedBtn5.setEnabled(true);
-                    selectedBtn6.setEnabled(true);
-                    selectedBtn7.setEnabled(true);
-                    selectedBtn8.setEnabled(true);
-                    selectedBtn9.setEnabled(true);
-                    selectedBtn10.setEnabled(true);
-                    selectedBtn11.setEnabled(true);
-                    selectedBtn12.setEnabled(true);
-                    selectedBtn13.setEnabled(true);
-                    selectedBtn14.setEnabled(true);
-                    selectedBtn15.setEnabled(true);
-                    selectedBtn16.setEnabled(true);
-                    selectedBtn17.setEnabled(true);
-                    selectedBtn18.setEnabled(true);
-                    selectedBtn19.setEnabled(true);
-                }
-                else{
-                    selectedBtn2.setSelected(true);
-                    selected[0] = true;
-                    selectedBtn1.setEnabled(false);
-                    selectedBtn3.setEnabled(false);
-                    selectedBtn4.setEnabled(false);
-                    selectedBtn5.setEnabled(false);
-                    selectedBtn6.setEnabled(false);
-                    selectedBtn7.setEnabled(false);
-                    selectedBtn8.setEnabled(false);
-                    selectedBtn9.setEnabled(false);
-                    selectedBtn10.setEnabled(false);
-                    selectedBtn11.setEnabled(false);
-                    selectedBtn12.setEnabled(false);
-                    selectedBtn13.setEnabled(false);
-                    selectedBtn14.setEnabled(false);
-                    selectedBtn15.setEnabled(false);
-                    selectedBtn16.setEnabled(false);
-                    selectedBtn17.setEnabled(false);
-                    selectedBtn18.setEnabled(false);
-                    selectedBtn19.setEnabled(false);
-                }
-            }
-        });
-
-
-        selectedBtn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(selected[0]){
-                    selectedBtn3.setSelected(false);
-                    selected[0] = false;
-                    selectedBtn2.setEnabled(true);
-                    selectedBtn1.setEnabled(true);
-                    selectedBtn4.setEnabled(true);
-                    selectedBtn5.setEnabled(true);
-                    selectedBtn6.setEnabled(true);
-                    selectedBtn7.setEnabled(true);
-                    selectedBtn8.setEnabled(true);
-                    selectedBtn9.setEnabled(true);
-                    selectedBtn10.setEnabled(true);
-                    selectedBtn11.setEnabled(true);
-                    selectedBtn12.setEnabled(true);
-                    selectedBtn13.setEnabled(true);
-                    selectedBtn14.setEnabled(true);
-                    selectedBtn15.setEnabled(true);
-                    selectedBtn16.setEnabled(true);
-                    selectedBtn17.setEnabled(true);
-                    selectedBtn18.setEnabled(true);
-                    selectedBtn19.setEnabled(true);
-                }
-                else{
-                    selectedBtn3.setSelected(true);
-                    selected[0] = true;
-                    selectedBtn2.setEnabled(false);
-                    selectedBtn1.setEnabled(false);
-                    selectedBtn4.setEnabled(false);
-                    selectedBtn5.setEnabled(false);
-                    selectedBtn6.setEnabled(false);
-                    selectedBtn7.setEnabled(false);
-                    selectedBtn8.setEnabled(false);
-                    selectedBtn9.setEnabled(false);
-                    selectedBtn10.setEnabled(false);
-                    selectedBtn11.setEnabled(false);
-                    selectedBtn12.setEnabled(false);
-                    selectedBtn13.setEnabled(false);
-                    selectedBtn14.setEnabled(false);
-                    selectedBtn15.setEnabled(false);
-                    selectedBtn16.setEnabled(false);
-                    selectedBtn17.setEnabled(false);
-                    selectedBtn18.setEnabled(false);
-                    selectedBtn19.setEnabled(false);
-                }
-            }
-        });
-
-        selectedBtn4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(selected[0]){
-                    selectedBtn4.setSelected(false);
-                    selected[0] = false;
-                    selectedBtn2.setEnabled(true);
-                    selectedBtn3.setEnabled(true);
-                    selectedBtn1.setEnabled(true);
-                    selectedBtn5.setEnabled(true);
-                    selectedBtn6.setEnabled(true);
-                    selectedBtn7.setEnabled(true);
-                    selectedBtn8.setEnabled(true);
-                    selectedBtn9.setEnabled(true);
-                    selectedBtn10.setEnabled(true);
-                    selectedBtn11.setEnabled(true);
-                    selectedBtn12.setEnabled(true);
-                    selectedBtn13.setEnabled(true);
-                    selectedBtn14.setEnabled(true);
-                    selectedBtn15.setEnabled(true);
-                    selectedBtn16.setEnabled(true);
-                    selectedBtn17.setEnabled(true);
-                    selectedBtn18.setEnabled(true);
-                    selectedBtn19.setEnabled(true);
-                }
-                else{
-                    selectedBtn4.setSelected(true);
-                    selected[0] = true;
-                    selectedBtn2.setEnabled(false);
-                    selectedBtn3.setEnabled(false);
-                    selectedBtn1.setEnabled(false);
-                    selectedBtn5.setEnabled(false);
-                    selectedBtn6.setEnabled(false);
-                    selectedBtn7.setEnabled(false);
-                    selectedBtn8.setEnabled(false);
-                    selectedBtn9.setEnabled(false);
-                    selectedBtn10.setEnabled(false);
-                    selectedBtn11.setEnabled(false);
-                    selectedBtn12.setEnabled(false);
-                    selectedBtn13.setEnabled(false);
-                    selectedBtn14.setEnabled(false);
-                    selectedBtn15.setEnabled(false);
-                    selectedBtn16.setEnabled(false);
-                    selectedBtn17.setEnabled(false);
-                    selectedBtn18.setEnabled(false);
-                    selectedBtn19.setEnabled(false);
-                }
-            }
-        });
-
-        selectedBtn5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(selected[0]){
-                    selectedBtn5.setSelected(false);
-                    selected[0] = false;
-                    selectedBtn2.setEnabled(true);
-                    selectedBtn3.setEnabled(true);
-                    selectedBtn4.setEnabled(true);
-                    selectedBtn1.setEnabled(true);
-                    selectedBtn6.setEnabled(true);
-                    selectedBtn7.setEnabled(true);
-                    selectedBtn8.setEnabled(true);
-                    selectedBtn9.setEnabled(true);
-                    selectedBtn10.setEnabled(true);
-                    selectedBtn11.setEnabled(true);
-                    selectedBtn12.setEnabled(true);
-                    selectedBtn13.setEnabled(true);
-                    selectedBtn14.setEnabled(true);
-                    selectedBtn15.setEnabled(true);
-                    selectedBtn16.setEnabled(true);
-                    selectedBtn17.setEnabled(true);
-                    selectedBtn18.setEnabled(true);
-                    selectedBtn19.setEnabled(true);
-                }
-                else{
-                    selectedBtn5.setSelected(true);
-                    selected[0] = true;
-                    selectedBtn2.setEnabled(false);
-                    selectedBtn3.setEnabled(false);
-                    selectedBtn4.setEnabled(false);
-                    selectedBtn1.setEnabled(false);
-                    selectedBtn6.setEnabled(false);
-                    selectedBtn7.setEnabled(false);
-                    selectedBtn8.setEnabled(false);
-                    selectedBtn9.setEnabled(false);
-                    selectedBtn10.setEnabled(false);
-                    selectedBtn11.setEnabled(false);
-                    selectedBtn12.setEnabled(false);
-                    selectedBtn13.setEnabled(false);
-                    selectedBtn14.setEnabled(false);
-                    selectedBtn15.setEnabled(false);
-                    selectedBtn16.setEnabled(false);
-                    selectedBtn17.setEnabled(false);
-                    selectedBtn18.setEnabled(false);
-                    selectedBtn19.setEnabled(false);
-                }
-            }
-        });
-
-        selectedBtn6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(selected[0]){
-                    selectedBtn6.setSelected(false);
-                    selected[0] = false;
-                    selectedBtn2.setEnabled(true);
-                    selectedBtn3.setEnabled(true);
-                    selectedBtn4.setEnabled(true);
-                    selectedBtn5.setEnabled(true);
-                    selectedBtn1.setEnabled(true);
-                    selectedBtn7.setEnabled(true);
-                    selectedBtn8.setEnabled(true);
-                    selectedBtn9.setEnabled(true);
-                    selectedBtn10.setEnabled(true);
-                    selectedBtn11.setEnabled(true);
-                    selectedBtn12.setEnabled(true);
-                    selectedBtn13.setEnabled(true);
-                    selectedBtn14.setEnabled(true);
-                    selectedBtn15.setEnabled(true);
-                    selectedBtn16.setEnabled(true);
-                    selectedBtn17.setEnabled(true);
-                    selectedBtn18.setEnabled(true);
-                    selectedBtn19.setEnabled(true);
-                }
-                else{
-                    selectedBtn6.setSelected(true);
-                    selected[0] = true;
-                    selectedBtn2.setEnabled(false);
-                    selectedBtn3.setEnabled(false);
-                    selectedBtn4.setEnabled(false);
-                    selectedBtn5.setEnabled(false);
-                    selectedBtn1.setEnabled(false);
-                    selectedBtn7.setEnabled(false);
-                    selectedBtn8.setEnabled(false);
-                    selectedBtn9.setEnabled(false);
-                    selectedBtn10.setEnabled(false);
-                    selectedBtn11.setEnabled(false);
-                    selectedBtn12.setEnabled(false);
-                    selectedBtn13.setEnabled(false);
-                    selectedBtn14.setEnabled(false);
-                    selectedBtn15.setEnabled(false);
-                    selectedBtn16.setEnabled(false);
-                    selectedBtn17.setEnabled(false);
-                    selectedBtn18.setEnabled(false);
-                    selectedBtn19.setEnabled(false);
-                }
-            }
-        });
-        //Button selectedBtn7 = findViewById(R.id.BtnTable7);
-        selectedBtn7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(selected[0]){
-                    selectedBtn7.setSelected(false);
-                    selected[0] = false;
-                    selectedBtn2.setEnabled(true);
-                    selectedBtn3.setEnabled(true);
-                    selectedBtn4.setEnabled(true);
-                    selectedBtn5.setEnabled(true);
-                    selectedBtn6.setEnabled(true);
-                    selectedBtn1.setEnabled(true);
-                    selectedBtn8.setEnabled(true);
-                    selectedBtn9.setEnabled(true);
-                    selectedBtn10.setEnabled(true);
-                    selectedBtn11.setEnabled(true);
-                    selectedBtn12.setEnabled(true);
-                    selectedBtn13.setEnabled(true);
-                    selectedBtn14.setEnabled(true);
-                    selectedBtn15.setEnabled(true);
-                    selectedBtn16.setEnabled(true);
-                    selectedBtn17.setEnabled(true);
-                    selectedBtn18.setEnabled(true);
-                    selectedBtn19.setEnabled(true);
-                }
-                else{
-                    selectedBtn7.setSelected(true);
-                    selected[0] = true;
-                    selectedBtn2.setEnabled(false);
-                    selectedBtn3.setEnabled(false);
-                    selectedBtn4.setEnabled(false);
-                    selectedBtn5.setEnabled(false);
-                    selectedBtn6.setEnabled(false);
-                    selectedBtn1.setEnabled(false);
-                    selectedBtn8.setEnabled(false);
-                    selectedBtn9.setEnabled(false);
-                    selectedBtn10.setEnabled(false);
-                    selectedBtn11.setEnabled(false);
-                    selectedBtn12.setEnabled(false);
-                    selectedBtn13.setEnabled(false);
-                    selectedBtn14.setEnabled(false);
-                    selectedBtn15.setEnabled(false);
-                    selectedBtn16.setEnabled(false);
-                    selectedBtn17.setEnabled(false);
-                    selectedBtn18.setEnabled(false);
-                    selectedBtn19.setEnabled(false);
-                }
-            }
-        });
-        //Button selectedBtn8 = findViewById(R.id.BtnTable8);
-        selectedBtn8.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(selected[0]){
-                    selectedBtn8.setSelected(false);
-                    selected[0] = false;
-                    selectedBtn2.setEnabled(true);
-                    selectedBtn3.setEnabled(true);
-                    selectedBtn4.setEnabled(true);
-                    selectedBtn5.setEnabled(true);
-                    selectedBtn6.setEnabled(true);
-                    selectedBtn7.setEnabled(true);
-                    selectedBtn1.setEnabled(true);
-                    selectedBtn9.setEnabled(true);
-                    selectedBtn10.setEnabled(true);
-                    selectedBtn11.setEnabled(true);
-                    selectedBtn12.setEnabled(true);
-                    selectedBtn13.setEnabled(true);
-                    selectedBtn14.setEnabled(true);
-                    selectedBtn15.setEnabled(true);
-                    selectedBtn16.setEnabled(true);
-                    selectedBtn17.setEnabled(true);
-                    selectedBtn18.setEnabled(true);
-                    selectedBtn19.setEnabled(true);
-                }
-                else{
-                    selectedBtn8.setSelected(true);
-                    selected[0] = true;
-                    selectedBtn2.setEnabled(false);
-                    selectedBtn3.setEnabled(false);
-                    selectedBtn4.setEnabled(false);
-                    selectedBtn5.setEnabled(false);
-                    selectedBtn6.setEnabled(false);
-                    selectedBtn7.setEnabled(false);
-                    selectedBtn1.setEnabled(false);
-                    selectedBtn9.setEnabled(false);
-                    selectedBtn10.setEnabled(false);
-                    selectedBtn11.setEnabled(false);
-                    selectedBtn12.setEnabled(false);
-                    selectedBtn13.setEnabled(false);
-                    selectedBtn14.setEnabled(false);
-                    selectedBtn15.setEnabled(false);
-                    selectedBtn16.setEnabled(false);
-                    selectedBtn17.setEnabled(false);
-                    selectedBtn18.setEnabled(false);
-                    selectedBtn19.setEnabled(false);
-                }
-            }
-        });
-        //Button selectedBtn9 = findViewById(R.id.BtnTable9);
-        selectedBtn9.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(selected[0]){
-                    selectedBtn9.setSelected(false);
-                    selected[0] = false;
-                    selectedBtn2.setEnabled(true);
-                    selectedBtn3.setEnabled(true);
-                    selectedBtn4.setEnabled(true);
-                    selectedBtn5.setEnabled(true);
-                    selectedBtn6.setEnabled(true);
-                    selectedBtn7.setEnabled(true);
-                    selectedBtn8.setEnabled(true);
-                    selectedBtn1.setEnabled(true);
-                    selectedBtn10.setEnabled(true);
-                    selectedBtn11.setEnabled(true);
-                    selectedBtn12.setEnabled(true);
-                    selectedBtn13.setEnabled(true);
-                    selectedBtn14.setEnabled(true);
-                    selectedBtn15.setEnabled(true);
-                    selectedBtn16.setEnabled(true);
-                    selectedBtn17.setEnabled(true);
-                    selectedBtn18.setEnabled(true);
-                    selectedBtn19.setEnabled(true);
-                }
-                else{
-                    selectedBtn9.setSelected(true);
-                    selected[0] = true;
-                    selectedBtn2.setEnabled(false);
-                    selectedBtn3.setEnabled(false);
-                    selectedBtn4.setEnabled(false);
-                    selectedBtn5.setEnabled(false);
-                    selectedBtn6.setEnabled(false);
-                    selectedBtn7.setEnabled(false);
-                    selectedBtn8.setEnabled(false);
-                    selectedBtn1.setEnabled(false);
-                    selectedBtn10.setEnabled(false);
-                    selectedBtn11.setEnabled(false);
-                    selectedBtn12.setEnabled(false);
-                    selectedBtn13.setEnabled(false);
-                    selectedBtn14.setEnabled(false);
-                    selectedBtn15.setEnabled(false);
-                    selectedBtn16.setEnabled(false);
-                    selectedBtn17.setEnabled(false);
-                    selectedBtn18.setEnabled(false);
-                    selectedBtn19.setEnabled(false);
-                }
-            }
-        });
-        //Button selectedBtn10 = findViewById(R.id.BtnTable10);
-        selectedBtn10.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(selected[0]){
-                    selectedBtn10.setSelected(false);
-                    selected[0] = false;
-                    selectedBtn2.setEnabled(true);
-                    selectedBtn3.setEnabled(true);
-                    selectedBtn4.setEnabled(true);
-                    selectedBtn5.setEnabled(true);
-                    selectedBtn6.setEnabled(true);
-                    selectedBtn7.setEnabled(true);
-                    selectedBtn8.setEnabled(true);
-                    selectedBtn9.setEnabled(true);
-                    selectedBtn1.setEnabled(true);
-                    selectedBtn11.setEnabled(true);
-                    selectedBtn12.setEnabled(true);
-                    selectedBtn13.setEnabled(true);
-                    selectedBtn14.setEnabled(true);
-                    selectedBtn15.setEnabled(true);
-                    selectedBtn16.setEnabled(true);
-                    selectedBtn17.setEnabled(true);
-                    selectedBtn18.setEnabled(true);
-                    selectedBtn19.setEnabled(true);
-                }
-                else{
-                    selectedBtn10.setSelected(true);
-                    selected[0] = true;
-                    selectedBtn2.setEnabled(false);
-                    selectedBtn3.setEnabled(false);
-                    selectedBtn4.setEnabled(false);
-                    selectedBtn5.setEnabled(false);
-                    selectedBtn6.setEnabled(false);
-                    selectedBtn7.setEnabled(false);
-                    selectedBtn8.setEnabled(false);
-                    selectedBtn9.setEnabled(false);
-                    selectedBtn1.setEnabled(false);
-                    selectedBtn11.setEnabled(false);
-                    selectedBtn12.setEnabled(false);
-                    selectedBtn13.setEnabled(false);
-                    selectedBtn14.setEnabled(false);
-                    selectedBtn15.setEnabled(false);
-                    selectedBtn16.setEnabled(false);
-                    selectedBtn17.setEnabled(false);
-                    selectedBtn18.setEnabled(false);
-                    selectedBtn19.setEnabled(false);
-                }
-            }
-        });
-
-        //Button selectedBtn11 = findViewById(R.id.BtnTable11);
-        selectedBtn11.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(selected[0]){
-                    selectedBtn11.setSelected(false);
-                    selected[0] = false;
-                    selectedBtn2.setEnabled(true);
-                    selectedBtn3.setEnabled(true);
-                    selectedBtn4.setEnabled(true);
-                    selectedBtn5.setEnabled(true);
-                    selectedBtn6.setEnabled(true);
-                    selectedBtn7.setEnabled(true);
-                    selectedBtn8.setEnabled(true);
-                    selectedBtn9.setEnabled(true);
-                    selectedBtn10.setEnabled(true);
-                    selectedBtn1.setEnabled(true);
-                    selectedBtn12.setEnabled(true);
-                    selectedBtn13.setEnabled(true);
-                    selectedBtn14.setEnabled(true);
-                    selectedBtn15.setEnabled(true);
-                    selectedBtn16.setEnabled(true);
-                    selectedBtn17.setEnabled(true);
-                    selectedBtn18.setEnabled(true);
-                    selectedBtn19.setEnabled(true);
-                }
-                else{
-                    selectedBtn11.setSelected(true);
-                    selected[0] = true;
-                    selectedBtn2.setEnabled(false);
-                    selectedBtn3.setEnabled(false);
-                    selectedBtn4.setEnabled(false);
-                    selectedBtn5.setEnabled(false);
-                    selectedBtn6.setEnabled(false);
-                    selectedBtn7.setEnabled(false);
-                    selectedBtn8.setEnabled(false);
-                    selectedBtn9.setEnabled(false);
-                    selectedBtn10.setEnabled(false);
-                    selectedBtn1.setEnabled(false);
-                    selectedBtn12.setEnabled(false);
-                    selectedBtn13.setEnabled(false);
-                    selectedBtn14.setEnabled(false);
-                    selectedBtn15.setEnabled(false);
-                    selectedBtn16.setEnabled(false);
-                    selectedBtn17.setEnabled(false);
-                    selectedBtn18.setEnabled(false);
-                    selectedBtn19.setEnabled(false);
-                }
-            }
-        });
-        //Button selectedBtn12 = findViewById(R.id.BtnTable12);
-        selectedBtn12.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(selected[0]){
-                    selectedBtn12.setSelected(false);
-                    selected[0] = false;
-                    selectedBtn2.setEnabled(true);
-                    selectedBtn3.setEnabled(true);
-                    selectedBtn4.setEnabled(true);
-                    selectedBtn5.setEnabled(true);
-                    selectedBtn6.setEnabled(true);
-                    selectedBtn7.setEnabled(true);
-                    selectedBtn8.setEnabled(true);
-                    selectedBtn9.setEnabled(true);
-                    selectedBtn10.setEnabled(true);
-                    selectedBtn11.setEnabled(true);
-                    selectedBtn1.setEnabled(true);
-                    selectedBtn13.setEnabled(true);
-                    selectedBtn14.setEnabled(true);
-                    selectedBtn15.setEnabled(true);
-                    selectedBtn16.setEnabled(true);
-                    selectedBtn17.setEnabled(true);
-                    selectedBtn18.setEnabled(true);
-                    selectedBtn19.setEnabled(true);
-                }
-                else{
-                    selectedBtn12.setSelected(true);
-                    selected[0] = true;
-                    selectedBtn2.setEnabled(false);
-                    selectedBtn3.setEnabled(false);
-                    selectedBtn4.setEnabled(false);
-                    selectedBtn5.setEnabled(false);
-                    selectedBtn6.setEnabled(false);
-                    selectedBtn7.setEnabled(false);
-                    selectedBtn8.setEnabled(false);
-                    selectedBtn9.setEnabled(false);
-                    selectedBtn10.setEnabled(false);
-                    selectedBtn11.setEnabled(false);
-                    selectedBtn1.setEnabled(false);
-                    selectedBtn13.setEnabled(false);
-                    selectedBtn14.setEnabled(false);
-                    selectedBtn15.setEnabled(false);
-                    selectedBtn16.setEnabled(false);
-                    selectedBtn17.setEnabled(false);
-                    selectedBtn18.setEnabled(false);
-                    selectedBtn19.setEnabled(false);
-                }
-            }
-        });
-        //Button selectedBtn13 = findViewById(R.id.BtnTable13);
-        selectedBtn13.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(selected[0]){
-                    selectedBtn13.setSelected(false);
-                    selected[0] = false;
-                    selectedBtn2.setEnabled(true);
-                    selectedBtn3.setEnabled(true);
-                    selectedBtn4.setEnabled(true);
-                    selectedBtn5.setEnabled(true);
-                    selectedBtn6.setEnabled(true);
-                    selectedBtn7.setEnabled(true);
-                    selectedBtn8.setEnabled(true);
-                    selectedBtn9.setEnabled(true);
-                    selectedBtn10.setEnabled(true);
-                    selectedBtn11.setEnabled(true);
-                    selectedBtn12.setEnabled(true);
-                    selectedBtn1.setEnabled(true);
-                    selectedBtn14.setEnabled(true);
-                    selectedBtn15.setEnabled(true);
-                    selectedBtn16.setEnabled(true);
-                    selectedBtn17.setEnabled(true);
-                    selectedBtn18.setEnabled(true);
-                    selectedBtn19.setEnabled(true);
-                }
-                else{
-                    selectedBtn13.setSelected(true);
-                    selected[0] = true;
-                    selectedBtn2.setEnabled(false);
-                    selectedBtn3.setEnabled(false);
-                    selectedBtn4.setEnabled(false);
-                    selectedBtn5.setEnabled(false);
-                    selectedBtn6.setEnabled(false);
-                    selectedBtn7.setEnabled(false);
-                    selectedBtn8.setEnabled(false);
-                    selectedBtn9.setEnabled(false);
-                    selectedBtn10.setEnabled(false);
-                    selectedBtn11.setEnabled(false);
-                    selectedBtn12.setEnabled(false);
-                    selectedBtn1.setEnabled(false);
-                    selectedBtn14.setEnabled(false);
-                    selectedBtn15.setEnabled(false);
-                    selectedBtn16.setEnabled(false);
-                    selectedBtn17.setEnabled(false);
-                    selectedBtn18.setEnabled(false);
-                    selectedBtn19.setEnabled(false);
-                }
-            }
-        });
-        //Button selectedBtn14 = findViewById(R.id.BtnTable14);
-        selectedBtn14.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(selected[0]){
-                    selectedBtn14.setSelected(false);
-                    selected[0] = false;
-                    selectedBtn2.setEnabled(true);
-                    selectedBtn3.setEnabled(true);
-                    selectedBtn4.setEnabled(true);
-                    selectedBtn5.setEnabled(true);
-                    selectedBtn6.setEnabled(true);
-                    selectedBtn7.setEnabled(true);
-                    selectedBtn8.setEnabled(true);
-                    selectedBtn9.setEnabled(true);
-                    selectedBtn10.setEnabled(true);
-                    selectedBtn11.setEnabled(true);
-                    selectedBtn12.setEnabled(true);
-                    selectedBtn13.setEnabled(true);
-                    selectedBtn1.setEnabled(true);
-                    selectedBtn15.setEnabled(true);
-                    selectedBtn16.setEnabled(true);
-                    selectedBtn17.setEnabled(true);
-                    selectedBtn18.setEnabled(true);
-                    selectedBtn19.setEnabled(true);
-                }
-                else{
-                    selectedBtn14.setSelected(true);
-                    selected[0] = true;
-                    selectedBtn2.setEnabled(false);
-                    selectedBtn3.setEnabled(false);
-                    selectedBtn4.setEnabled(false);
-                    selectedBtn5.setEnabled(false);
-                    selectedBtn6.setEnabled(false);
-                    selectedBtn7.setEnabled(false);
-                    selectedBtn8.setEnabled(false);
-                    selectedBtn9.setEnabled(false);
-                    selectedBtn10.setEnabled(false);
-                    selectedBtn11.setEnabled(false);
-                    selectedBtn12.setEnabled(false);
-                    selectedBtn13.setEnabled(false);
-                    selectedBtn1.setEnabled(false);
-                    selectedBtn15.setEnabled(false);
-                    selectedBtn16.setEnabled(false);
-                    selectedBtn17.setEnabled(false);
-                    selectedBtn18.setEnabled(false);
-                    selectedBtn19.setEnabled(false);
-                }
-            }
-        });
-        //Button selectedBtn15 = findViewById(R.id.BtnTable15);
-        selectedBtn15.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(selected[0]){
-                    selectedBtn15.setSelected(false);
-                    selected[0] = false;
-                    selectedBtn2.setEnabled(true);
-                    selectedBtn3.setEnabled(true);
-                    selectedBtn4.setEnabled(true);
-                    selectedBtn5.setEnabled(true);
-                    selectedBtn6.setEnabled(true);
-                    selectedBtn7.setEnabled(true);
-                    selectedBtn8.setEnabled(true);
-                    selectedBtn9.setEnabled(true);
-                    selectedBtn10.setEnabled(true);
-                    selectedBtn11.setEnabled(true);
-                    selectedBtn12.setEnabled(true);
-                    selectedBtn13.setEnabled(true);
-                    selectedBtn14.setEnabled(true);
-                    selectedBtn1.setEnabled(true);
-                    selectedBtn16.setEnabled(true);
-                    selectedBtn17.setEnabled(true);
-                    selectedBtn18.setEnabled(true);
-                    selectedBtn19.setEnabled(true);
-                }
-                else{
-                    selectedBtn15.setSelected(true);
-                    selected[0] = true;
-                    selectedBtn2.setEnabled(false);
-                    selectedBtn3.setEnabled(false);
-                    selectedBtn4.setEnabled(false);
-                    selectedBtn5.setEnabled(false);
-                    selectedBtn6.setEnabled(false);
-                    selectedBtn7.setEnabled(false);
-                    selectedBtn8.setEnabled(false);
-                    selectedBtn9.setEnabled(false);
-                    selectedBtn10.setEnabled(false);
-                    selectedBtn11.setEnabled(false);
-                    selectedBtn12.setEnabled(false);
-                    selectedBtn13.setEnabled(false);
-                    selectedBtn14.setEnabled(false);
-                    selectedBtn1.setEnabled(false);
-                    selectedBtn16.setEnabled(false);
-                    selectedBtn17.setEnabled(false);
-                    selectedBtn18.setEnabled(false);
-                    selectedBtn19.setEnabled(false);
-                }
-            }
-        });
-        //Button selectedBtn16 = findViewById(R.id.BtnTable16);
-        selectedBtn16.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(selected[0]){
-                    selectedBtn16.setSelected(false);
-                    selected[0] = false;
-                    selectedBtn2.setEnabled(true);
-                    selectedBtn3.setEnabled(true);
-                    selectedBtn4.setEnabled(true);
-                    selectedBtn5.setEnabled(true);
-                    selectedBtn6.setEnabled(true);
-                    selectedBtn7.setEnabled(true);
-                    selectedBtn8.setEnabled(true);
-                    selectedBtn9.setEnabled(true);
-                    selectedBtn10.setEnabled(true);
-                    selectedBtn11.setEnabled(true);
-                    selectedBtn12.setEnabled(true);
-                    selectedBtn13.setEnabled(true);
-                    selectedBtn14.setEnabled(true);
-                    selectedBtn15.setEnabled(true);
-                    selectedBtn1.setEnabled(true);
-                    selectedBtn17.setEnabled(true);
-                    selectedBtn18.setEnabled(true);
-                    selectedBtn19.setEnabled(true);
-                }
-                else{
-                    selectedBtn16.setSelected(true);
-                    selected[0] = true;
-                    selectedBtn2.setEnabled(false);
-                    selectedBtn3.setEnabled(false);
-                    selectedBtn4.setEnabled(false);
-                    selectedBtn5.setEnabled(false);
-                    selectedBtn6.setEnabled(false);
-                    selectedBtn7.setEnabled(false);
-                    selectedBtn8.setEnabled(false);
-                    selectedBtn9.setEnabled(false);
-                    selectedBtn10.setEnabled(false);
-                    selectedBtn11.setEnabled(false);
-                    selectedBtn12.setEnabled(false);
-                    selectedBtn13.setEnabled(false);
-                    selectedBtn14.setEnabled(false);
-                    selectedBtn15.setEnabled(false);
-                    selectedBtn1.setEnabled(false);
-                    selectedBtn17.setEnabled(false);
-                    selectedBtn18.setEnabled(false);
-                    selectedBtn19.setEnabled(false);
-                }
-            }
-        });
-
-        //Button selectedBtn17 = findViewById(R.id.BtnTable17);
-        selectedBtn17.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(selected[0]){
-                    selectedBtn17.setSelected(false);
-                    selected[0] = false;
-                    selectedBtn2.setEnabled(true);
-                    selectedBtn3.setEnabled(true);
-                    selectedBtn4.setEnabled(true);
-                    selectedBtn5.setEnabled(true);
-                    selectedBtn6.setEnabled(true);
-                    selectedBtn7.setEnabled(true);
-                    selectedBtn8.setEnabled(true);
-                    selectedBtn9.setEnabled(true);
-                    selectedBtn10.setEnabled(true);
-                    selectedBtn11.setEnabled(true);
-                    selectedBtn12.setEnabled(true);
-                    selectedBtn13.setEnabled(true);
-                    selectedBtn14.setEnabled(true);
-                    selectedBtn15.setEnabled(true);
-                    selectedBtn16.setEnabled(true);
-                    selectedBtn1.setEnabled(true);
-                    selectedBtn18.setEnabled(true);
-                    selectedBtn19.setEnabled(true);
-                }
-                else{
-                    selectedBtn17.setSelected(true);
-                    selected[0] = true;
-                    selectedBtn2.setEnabled(false);
-                    selectedBtn3.setEnabled(false);
-                    selectedBtn4.setEnabled(false);
-                    selectedBtn5.setEnabled(false);
-                    selectedBtn6.setEnabled(false);
-                    selectedBtn7.setEnabled(false);
-                    selectedBtn8.setEnabled(false);
-                    selectedBtn9.setEnabled(false);
-                    selectedBtn10.setEnabled(false);
-                    selectedBtn11.setEnabled(false);
-                    selectedBtn12.setEnabled(false);
-                    selectedBtn13.setEnabled(false);
-                    selectedBtn14.setEnabled(false);
-                    selectedBtn15.setEnabled(false);
-                    selectedBtn16.setEnabled(false);
-                    selectedBtn1.setEnabled(false);
-                    selectedBtn18.setEnabled(false);
-                    selectedBtn19.setEnabled(false);
-                }
-            }
-        });
-        //Button selectedBtn18 = findViewById(R.id.BtnTable18);
-        selectedBtn18.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(selected[0]){
-                    selectedBtn18.setSelected(false);
-                    selected[0] = false;
-                    selectedBtn2.setEnabled(true);
-                    selectedBtn3.setEnabled(true);
-                    selectedBtn4.setEnabled(true);
-                    selectedBtn5.setEnabled(true);
-                    selectedBtn6.setEnabled(true);
-                    selectedBtn7.setEnabled(true);
-                    selectedBtn8.setEnabled(true);
-                    selectedBtn9.setEnabled(true);
-                    selectedBtn10.setEnabled(true);
-                    selectedBtn11.setEnabled(true);
-                    selectedBtn12.setEnabled(true);
-                    selectedBtn13.setEnabled(true);
-                    selectedBtn14.setEnabled(true);
-                    selectedBtn15.setEnabled(true);
-                    selectedBtn16.setEnabled(true);
-                    selectedBtn17.setEnabled(true);
-                    selectedBtn1.setEnabled(true);
-                    selectedBtn19.setEnabled(true);
-                }
-                else{
-                    selectedBtn18.setSelected(true);
-                    selected[0] = true;
-                    selectedBtn2.setEnabled(false);
-                    selectedBtn3.setEnabled(false);
-                    selectedBtn4.setEnabled(false);
-                    selectedBtn5.setEnabled(false);
-                    selectedBtn6.setEnabled(false);
-                    selectedBtn7.setEnabled(false);
-                    selectedBtn8.setEnabled(false);
-                    selectedBtn9.setEnabled(false);
-                    selectedBtn10.setEnabled(false);
-                    selectedBtn11.setEnabled(false);
-                    selectedBtn12.setEnabled(false);
-                    selectedBtn13.setEnabled(false);
-                    selectedBtn14.setEnabled(false);
-                    selectedBtn15.setEnabled(false);
-                    selectedBtn16.setEnabled(false);
-                    selectedBtn17.setEnabled(false);
-                    selectedBtn1.setEnabled(false);
-                    selectedBtn19.setEnabled(false);
-                }
-            }
-        });
-        //Button selectedBtn19 = findViewById(R.id.BtnTable19);
-        selectedBtn19.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(selected[0]){
-                    selectedBtn19.setSelected(false);
-                    selected[0] = false;
-                    selectedBtn2.setEnabled(true);
-                    selectedBtn3.setEnabled(true);
-                    selectedBtn4.setEnabled(true);
-                    selectedBtn5.setEnabled(true);
-                    selectedBtn6.setEnabled(true);
-                    selectedBtn7.setEnabled(true);
-                    selectedBtn8.setEnabled(true);
-                    selectedBtn9.setEnabled(true);
-                    selectedBtn10.setEnabled(true);
-                    selectedBtn11.setEnabled(true);
-                    selectedBtn12.setEnabled(true);
-                    selectedBtn13.setEnabled(true);
-                    selectedBtn14.setEnabled(true);
-                    selectedBtn15.setEnabled(true);
-                    selectedBtn16.setEnabled(true);
-                    selectedBtn17.setEnabled(true);
-                    selectedBtn18.setEnabled(true);
-                    selectedBtn1.setEnabled(true);
-                }
-                else{
-                    selectedBtn19.setSelected(true);
-                    selected[0] = true;
-                    selectedBtn2.setEnabled(false);
-                    selectedBtn3.setEnabled(false);
-                    selectedBtn4.setEnabled(false);
-                    selectedBtn5.setEnabled(false);
-                    selectedBtn6.setEnabled(false);
-                    selectedBtn7.setEnabled(false);
-                    selectedBtn8.setEnabled(false);
-                    selectedBtn9.setEnabled(false);
-                    selectedBtn10.setEnabled(false);
-                    selectedBtn11.setEnabled(false);
-                    selectedBtn12.setEnabled(false);
-                    selectedBtn13.setEnabled(false);
-                    selectedBtn14.setEnabled(false);
-                    selectedBtn15.setEnabled(false);
-                    selectedBtn16.setEnabled(false);
-                    selectedBtn17.setEnabled(false);
-                    selectedBtn18.setEnabled(false);
-                    selectedBtn1.setEnabled(false);
-                }
-            }
-        });
-
-
-        Button BtnChoice = (Button) findViewById(R.id.BtnChoice);
-        BtnChoice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (selected[0]) {
+               /* if(selected[0]){ //좌석 정보 없으면 인원 정보도 없는 것
                     Intent intent = new Intent(getApplicationContext(), TicketBuyActivity.class);
                     startActivity(intent);
+                }*/
+                if (selectnum.length() <= 0) {
+                    Toast.makeText(getApplicationContext(), "좌석을 선택하세요.", Toast.LENGTH_SHORT).show();
                 }
-                else  {
-                    Toast.makeText(getApplicationContext(), "좌석을 선택하세요", Toast.LENGTH_LONG).show();
-                }}
+                else {
+                    String seatnum = selectnum.getText().toString();
+
+                    InsertData task = new InsertData();
+                    task.execute("http://" + IP_ADDRESS + "/seatinsert.php", seatnum);
+
+                    Intent intent = new Intent(MainReservation.this, MainMypage.class);
+                    intent.putExtra("selectseat",seatnum);
+                    startActivity(intent);
+                    Toast.makeText(getApplicationContext(), "예약완료", Toast.LENGTH_SHORT).show();
+                }
+            }
         });
 
+        BtnUser.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainLogin.class);
+                startActivity(intent);
+            }
+        });
     }
+    class InsertData extends AsyncTask<String, Void, String> {
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            progressDialog = ProgressDialog.show(MainReservation.this,
+                    "Please Wait", null, true, true);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            progressDialog.dismiss();
+            Log.d(TAG, "POST response  - " + result);
+        }
+
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            //String id = (String)params[1];
+            //String check_in = (String)params[2];
+            //String check_out = (String)params[3];
+            //String present_use = (String)params[4];
+            String seat_num = (String)params[1];
+            //String member_id = (String)params[6];
+
+            String serverURL = (String)params[0];
+            String postParameters = "&seatnum=" + seat_num;
+
+            try {
+
+                URL url = new URL(serverURL);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+                httpURLConnection.setReadTimeout(5000);
+                httpURLConnection.setConnectTimeout(5000);
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.connect();
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                outputStream.write(postParameters.getBytes("UTF-8"));
+                outputStream.flush();
+                outputStream.close();
+
+                int responseStatusCode = httpURLConnection.getResponseCode();
+                Log.d(TAG, "POST response code - " + responseStatusCode);
+
+                InputStream inputStream;
+                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
+                    inputStream = httpURLConnection.getInputStream();
+                }
+                else{
+                    inputStream = httpURLConnection.getErrorStream();
+                }
+
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                StringBuilder sb = new StringBuilder();
+                String line = null;
+
+                while((line = bufferedReader.readLine()) != null){
+                    sb.append(line);
+                }
+
+
+                bufferedReader.close();
+
+
+                return sb.toString();
+
+
+            } catch (Exception e) {
+
+                Log.d(TAG, "InsertData: Error ", e);
+
+                return new String("Error: " + e.getMessage());
+            }
+
+        }
+    }
+
+
 }
