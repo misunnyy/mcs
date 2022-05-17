@@ -151,8 +151,7 @@
             android:background="#FFFFFF"
             android:src="@drawable/calendar"
             android:scaleType="fitCenter"
-            android:textColor="#000000"
-            android:text="예약" />
+            android:textColor="#000000" />
 
         <ImageButton
             android:id="@+id/BtnHome"
@@ -166,8 +165,8 @@
 
         <ImageButton
             android:id="@+id/BtnPay"
-            android:layout_width="36dp"
-            android:layout_height="44dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginLeft="30dp"
             android:background="#FFFFFF"
