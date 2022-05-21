@@ -63,7 +63,7 @@ public class MainMypage extends Activity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
 
-        String seat = bundle.getString("selectseat");
+        String seat = bundle.getString("reserveseat");
         reserve_seat.setText(seat);
 
         String time = bundle.getString("selecttime");

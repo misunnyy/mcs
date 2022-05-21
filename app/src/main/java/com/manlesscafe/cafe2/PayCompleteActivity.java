@@ -19,6 +19,7 @@ public class PayCompleteActivity extends Activity {
         Bundle bundle = intent.getExtras();
 
         String time = bundle.getString("reservetime");
+
         reserveTime.setText(time);
 
         Button BtnCheck = (Button)findViewById(R.id.BtnCheck);

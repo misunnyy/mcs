@@ -17,11 +17,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="결제에 성공하였습니다"
+        android:text="예약을 성공했습니다"
         android:layout_gravity="center"
         android:textSize="20dp"
         android:layout_marginTop="20dp"/>
-
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -32,12 +31,31 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="예약 시간 : "
+            android:text="현재 날짜 : "
             android:textSize="15dp"/>
         <TextView
-            android:layout_width="150dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:id="@+id/reserveTime"
+            android:id="@+id/presentDate"
+            android:text=""
+            android:textSize="15dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="예약 좌석 : "
+            android:textSize="15dp"/>
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/reserveSeat"
             android:text=""
             android:textSize="15dp"/>
     </LinearLayout>
@@ -47,7 +65,7 @@
         android:layout_height="wrap_content"
         android:text="확인"
         android:layout_gravity="center"
-        android:id="@+id/BtnCheck"
+        android:id="@+id/BtnCheck1"
         android:background="@color/blue_200"
         android:layout_marginTop="100dp"/>
 </LinearLayout>

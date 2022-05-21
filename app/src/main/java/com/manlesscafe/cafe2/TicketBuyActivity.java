@@ -54,7 +54,13 @@ public class TicketBuyActivity extends Activity {
             public void onClick(View v) { //15분 = 900초
 
                 //time[1] = 900;
+                String str = "900";
+                int time = Integer.valueOf(str);
 
+                int day = time / (60 * 60 * 24);  // day *
+                int hour = time % (60 * 60 * 24) / (60 * 60);
+                int minute = time % (60 * 60) / 60;
+                int second = time % 60;
             }
         });
 
@@ -109,7 +115,7 @@ public class TicketBuyActivity extends Activity {
                         BtnTimeTicket9.setSelected(false);
                         BtnTimeTicket12.setSelected(false);
                         selecttime.setText("900"); //버튼 번호를 받아와 띄움
-                        selecttime.setTextColor(Color.BLUE);
+                        selecttime.setTextColor(Color.WHITE);
                         //Toast.makeText(getApplicationContext(),"15분을 선택하셨습니다.",Toast.LENGTH_SHORT).show();
                     } else if (index == 1) {
                         BtnTimeTicket3.setSelected(true);
@@ -118,7 +124,7 @@ public class TicketBuyActivity extends Activity {
                         BtnTimeTicket9.setSelected(false);
                         BtnTimeTicket12.setSelected(false);
                         selecttime.setText("10800"); //버튼 번호를 받아와 띄움
-                        selecttime.setTextColor(Color.BLUE);
+                        selecttime.setTextColor(Color.WHITE);
                         //Toast.makeText(getApplicationContext(),"3시간을 선택하셨습니다.",Toast.LENGTH_SHORT).show();
                     } else if (index == 2) {
                         BtnTimeTicket6.setSelected(true);
@@ -127,7 +133,7 @@ public class TicketBuyActivity extends Activity {
                         BtnTimeTicket9.setSelected(false);
                         BtnTimeTicket12.setSelected(false);
                         selecttime.setText("21600"); //버튼 번호를 받아와 띄움
-                        selecttime.setTextColor(Color.BLUE);
+                        selecttime.setTextColor(Color.WHITE);
                         //Toast.makeText(getApplicationContext(),"6시간을 선택하셨습니다.",Toast.LENGTH_SHORT).show();
                     } else if (index == 3) {
                         BtnTimeTicket1.setSelected(false);
@@ -136,7 +142,7 @@ public class TicketBuyActivity extends Activity {
                         BtnTimeTicket9.setSelected(true);
                         BtnTimeTicket12.setSelected(false);
                         selecttime.setText("32400"); //버튼 번호를 받아와 띄움
-                        selecttime.setTextColor(Color.BLUE);
+                        selecttime.setTextColor(Color.WHITE);
                         //Toast.makeText(getApplicationContext(),"9시간을 선택하셨습니다.",Toast.LENGTH_SHORT).show();
                     } else if (index == 4) {
                         BtnTimeTicket1.setSelected(false);
@@ -145,7 +151,7 @@ public class TicketBuyActivity extends Activity {
                         BtnTimeTicket9.setSelected(false);
                         BtnTimeTicket12.setSelected(true);
                         selecttime.setText("43200"); //버튼 번호를 받아와 띄움
-                        selecttime.setTextColor(Color.BLUE);
+                        selecttime.setTextColor(Color.WHITE);
                         //Toast.makeText(getApplicationContext(),"12시간을 선택하셨습니다.",Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -158,13 +164,20 @@ public class TicketBuyActivity extends Activity {
                 if (selecttime.length() <= 0) {
                     Toast.makeText(getApplicationContext(), "결제시간을 선택하세요", Toast.LENGTH_SHORT).show();
                 } else {
-                    String time = selecttime.getText().toString();
+                    String time1 = selecttime.getText().toString();
 
+                    int time = Integer.valueOf(time1);
+
+                    int day = time / (60 * 60 * 24);  // day *
+                    int hour = time % (60 * 60 * 24) / (60 * 60);
+                    int minute = time % (60 * 60) / 60;
+                    int second = time % 60;
                     InsertData task = new InsertData();
-                    task.execute("http://" + IP_ADDRESS + "/memberinsert.php", time);
+
+                    task.execute("http://" + IP_ADDRESS + "/memberinsert.php", time1);
 
                     Intent intent = new Intent(TicketBuyActivity.this, PayCompleteActivity.class);
-                    intent.putExtra("reservetime", time);
+                    intent.putExtra("reservetime", day + "일 " + hour + "시간 " + minute + "분" + second + "초");
                     startActivity(intent);
 
                     Toast.makeText(getApplicationContext(), "결제완료", Toast.LENGTH_SHORT).show();

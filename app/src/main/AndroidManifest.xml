@@ -30,6 +30,7 @@
         <activity android:name=".PayCompleteActivity"/>
         <activity android:name=".InformationFindActivity" />
         <activity android:name=".UsageHistoryActivity"/>
+        <activity android:name=".ReserveCompleteActivity"/>
     </application>
 
 </manifest>

@@ -19,6 +19,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class MainReservation extends Activity {
     private static String IP_ADDRESS = "10.0.2.2:81";
@@ -26,6 +29,10 @@ public class MainReservation extends Activity {
 
     Button btnchoice;
     TextView selectnum;
+
+    long mNow;
+    Date mDate;
+    SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
     public void onCreate(Bundle savesInstanceState) {
         super.onCreate(savesInstanceState);
@@ -129,7 +136,7 @@ public class MainReservation extends Activity {
                         selectedBtn18.setSelected(false);
                         selectedBtn19.setSelected(false);
                         selectnum.setText("1번"); //버튼 번호를 받아와 띄움
-                        selectnum.setTextColor(Color.BLUE);
+                        selectnum.setTextColor(Color.WHITE);
                         //Toast.makeText(getApplicationContext(),"15분을 선택하셨습니다.",Toast.LENGTH_SHORT).show();
                     }
                     else if(index == 1){
@@ -153,7 +160,7 @@ public class MainReservation extends Activity {
                         selectedBtn18.setSelected(false);
                         selectedBtn19.setSelected(false);
                         selectnum.setText("2번"); //버튼 번호를 받아와 띄움
-                        selectnum.setTextColor(Color.BLUE);
+                        selectnum.setTextColor(Color.WHITE);
                         //Toast.makeText(getApplicationContext(),"3시간을 선택하셨습니다.",Toast.LENGTH_SHORT).show();
                     }
                     else if(index == 2){
@@ -177,7 +184,7 @@ public class MainReservation extends Activity {
                         selectedBtn18.setSelected(false);
                         selectedBtn19.setSelected(false);
                         selectnum.setText("3번"); //버튼 번호를 받아와 띄움
-                        selectnum.setTextColor(Color.BLUE);
+                        selectnum.setTextColor(Color.WHITE);
                         //Toast.makeText(getApplicationContext(),"6시간을 선택하셨습니다.",Toast.LENGTH_SHORT).show();
                     }
                     else if(index == 3){
@@ -201,7 +208,7 @@ public class MainReservation extends Activity {
                         selectedBtn18.setSelected(false);
                         selectedBtn19.setSelected(false);
                         selectnum.setText("4번"); //버튼 번호를 받아와 띄움
-                        selectnum.setTextColor(Color.BLUE);
+                        selectnum.setTextColor(Color.WHITE);
                         //Toast.makeText(getApplicationContext(),"9시간을 선택하셨습니다.",Toast.LENGTH_SHORT).show();
                     }
                     else if(index == 4){
@@ -225,7 +232,7 @@ public class MainReservation extends Activity {
                         selectedBtn18.setSelected(false);
                         selectedBtn19.setSelected(false);
                         selectnum.setText("5번"); //버튼 번호를 받아와 띄움
-                        selectnum.setTextColor(Color.BLUE);
+                        selectnum.setTextColor(Color.WHITE);
                         //Toast.makeText(getApplicationContext(),"12시간을 선택하셨습니다.",Toast.LENGTH_SHORT).show();
                     }
                     else if(index == 5){
@@ -249,7 +256,7 @@ public class MainReservation extends Activity {
                         selectedBtn18.setSelected(false);
                         selectedBtn19.setSelected(false);
                         selectnum.setText("6번"); //버튼 번호를 받아와 띄움
-                        selectnum.setTextColor(Color.BLUE);
+                        selectnum.setTextColor(Color.WHITE);
                         //Toast.makeText(getApplicationContext(),"12시간을 선택하셨습니다.",Toast.LENGTH_SHORT).show();
                     }
                     else if(index == 6){
@@ -273,7 +280,7 @@ public class MainReservation extends Activity {
                         selectedBtn18.setSelected(false);
                         selectedBtn19.setSelected(false);
                         selectnum.setText("7번"); //버튼 번호를 받아와 띄움
-                        selectnum.setTextColor(Color.BLUE);
+                        selectnum.setTextColor(Color.WHITE);
                         //Toast.makeText(getApplicationContext(),"12시간을 선택하셨습니다.",Toast.LENGTH_SHORT).show();
                     }
                     else if(index == 7){
@@ -297,7 +304,7 @@ public class MainReservation extends Activity {
                         selectedBtn18.setSelected(false);
                         selectedBtn19.setSelected(false);
                         selectnum.setText("8번"); //버튼 번호를 받아와 띄움
-                        selectnum.setTextColor(Color.BLUE);
+                        selectnum.setTextColor(Color.WHITE);
                         //Toast.makeText(getApplicationContext(),"12시간을 선택하셨습니다.",Toast.LENGTH_SHORT).show();
                     }
                     else if(index == 8){
@@ -321,7 +328,7 @@ public class MainReservation extends Activity {
                         selectedBtn18.setSelected(false);
                         selectedBtn19.setSelected(false);
                         selectnum.setText("9번"); //버튼 번호를 받아와 띄움
-                        selectnum.setTextColor(Color.BLUE);
+                        selectnum.setTextColor(Color.WHITE);
                         //Toast.makeText(getApplicationContext(),"12시간을 선택하셨습니다.",Toast.LENGTH_SHORT).show();
                     }
                     else if(index == 9){
@@ -345,7 +352,7 @@ public class MainReservation extends Activity {
                         selectedBtn18.setSelected(false);
                         selectedBtn19.setSelected(false);
                         selectnum.setText("10번"); //버튼 번호를 받아와 띄움
-                        selectnum.setTextColor(Color.BLUE);
+                        selectnum.setTextColor(Color.WHITE);
                         //Toast.makeText(getApplicationContext(),"12시간을 선택하셨습니다.",Toast.LENGTH_SHORT).show();
                     }
                     else if(index == 10){
@@ -369,7 +376,7 @@ public class MainReservation extends Activity {
                         selectedBtn18.setSelected(false);
                         selectedBtn19.setSelected(false);
                         selectnum.setText("11번"); //버튼 번호를 받아와 띄움
-                        selectnum.setTextColor(Color.BLUE);
+                        selectnum.setTextColor(Color.WHITE);
                         //Toast.makeText(getApplicationContext(),"12시간을 선택하셨습니다.",Toast.LENGTH_SHORT).show();
                     }
                     else if(index == 11){
@@ -393,7 +400,7 @@ public class MainReservation extends Activity {
                         selectedBtn18.setSelected(false);
                         selectedBtn19.setSelected(false);
                         selectnum.setText("12번"); //버튼 번호를 받아와 띄움
-                        selectnum.setTextColor(Color.BLUE);
+                        selectnum.setTextColor(Color.WHITE);
                         //Toast.makeText(getApplicationContext(),"12시간을 선택하셨습니다.",Toast.LENGTH_SHORT).show();
                     }
                     else if(index == 12){
@@ -417,7 +424,7 @@ public class MainReservation extends Activity {
                         selectedBtn18.setSelected(false);
                         selectedBtn19.setSelected(false);
                         selectnum.setText("13번"); //버튼 번호를 받아와 띄움
-                        selectnum.setTextColor(Color.BLUE);
+                        selectnum.setTextColor(Color.WHITE);
                         //Toast.makeText(getApplicationContext(),"12시간을 선택하셨습니다.",Toast.LENGTH_SHORT).show();
                     }
                     else if(index == 13){
@@ -441,7 +448,7 @@ public class MainReservation extends Activity {
                         selectedBtn18.setSelected(false);
                         selectedBtn19.setSelected(false);
                         selectnum.setText("14번"); //버튼 번호를 받아와 띄움
-                        selectnum.setTextColor(Color.BLUE);
+                        selectnum.setTextColor(Color.WHITE);
                         //Toast.makeText(getApplicationContext(),"12시간을 선택하셨습니다.",Toast.LENGTH_SHORT).show();
                     }
                     else if(index == 14){
@@ -465,7 +472,7 @@ public class MainReservation extends Activity {
                         selectedBtn18.setSelected(false);
                         selectedBtn19.setSelected(false);
                         selectnum.setText("15번"); //버튼 번호를 받아와 띄움
-                        selectnum.setTextColor(Color.BLUE);
+                        selectnum.setTextColor(Color.WHITE);
                         //Toast.makeText(getApplicationContext(),"12시간을 선택하셨습니다.",Toast.LENGTH_SHORT).show();
                     }
                     else if(index == 15){
@@ -489,7 +496,7 @@ public class MainReservation extends Activity {
                         selectedBtn18.setSelected(false);
                         selectedBtn19.setSelected(false);
                         selectnum.setText("16번"); //버튼 번호를 받아와 띄움
-                        selectnum.setTextColor(Color.BLUE);
+                        selectnum.setTextColor(Color.WHITE);
                         //Toast.makeText(getApplicationContext(),"12시간을 선택하셨습니다.",Toast.LENGTH_SHORT).show();
                     }
                     else if(index == 16){
@@ -513,7 +520,7 @@ public class MainReservation extends Activity {
                         selectedBtn18.setSelected(false);
                         selectedBtn19.setSelected(false);
                         selectnum.setText("17번"); //버튼 번호를 받아와 띄움
-                        selectnum.setTextColor(Color.BLUE);
+                        selectnum.setTextColor(Color.WHITE);
                         //Toast.makeText(getApplicationContext(),"12시간을 선택하셨습니다.",Toast.LENGTH_SHORT).show();
                     }
                     else if(index == 17){
@@ -537,7 +544,7 @@ public class MainReservation extends Activity {
                         selectedBtn18.setSelected(true);
                         selectedBtn19.setSelected(false);
                         selectnum.setText("18번"); //버튼 번호를 받아와 띄움
-                        selectnum.setTextColor(Color.BLUE);
+                        selectnum.setTextColor(Color.WHITE);
                         //Toast.makeText(getApplicationContext(),"12시간을 선택하셨습니다.",Toast.LENGTH_SHORT).show();
                     }
                     else if(index == 18){
@@ -561,7 +568,7 @@ public class MainReservation extends Activity {
                         selectedBtn18.setSelected(false);
                         selectedBtn19.setSelected(true);
                         selectnum.setText("19번"); //버튼 번호를 받아와 띄움
-                        selectnum.setTextColor(Color.BLUE);
+                        selectnum.setTextColor(Color.WHITE);
                         //Toast.makeText(getApplicationContext(),"12시간을 선택하셨습니다.",Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -581,14 +588,14 @@ public class MainReservation extends Activity {
                                 String seat_num = selectnum.getText().toString();
 
                                 InsertData task = new InsertData();
-                                task.execute("http://" + IP_ADDRESS + "/seatinsert.php", seat_num);
+                                task.execute("http://" + IP_ADDRESS + "/seatinsert.php", getTime(), seat_num);
 
-                                Intent intent = new Intent(MainReservation.this, MainMypage.class);
+                                Intent intent = new Intent(MainReservation.this, ReserveCompleteActivity.class);
                                 intent.putExtra("selectseat", seat_num);
                                 startActivity(intent);
                                 Toast.makeText(getApplicationContext(), "예약완료", Toast.LENGTH_SHORT).show();
 
-                                Log.d(TAG, "POST response  - " + seat_num);
+                                Log.d(TAG, "POST response  - " + getTime() + seat_num);
                             }
                         }
                     });
@@ -600,6 +607,13 @@ public class MainReservation extends Activity {
                         }
                     });
                 }
+
+                public String getTime() {
+                    mNow = System.currentTimeMillis();
+                    mDate = new Date(mNow);
+                    return mFormat.format(mDate);
+                }
+
 
                 class InsertData extends AsyncTask<String, Void, String> {
                     ProgressDialog progressDialog;
@@ -624,16 +638,20 @@ public class MainReservation extends Activity {
                     @Override
                     protected String doInBackground(String... params) {
 
+                        String present_time;
+
                         //String id = (String)params[1];
-                       // String check_in = (String)params[2];
+                        String check_in = (String)params[1];
                         //String check_out = (String)params[3];
                         //String present_use = (String)params[4];
-                        String seat_num = (String) params[1];
+                        String seat_num = (String) params[2];
                         boolean present_use = true;
                         //String member_id = (String)params[6];
 
+                       // check_in = getTime();
+
                         String serverURL = (String) params[0];
-                        String postParameters = "seat_num=" + seat_num + "&present_use=" + present_use;
+                        String postParameters = "check_in=" + check_in + "&seat_num=" + seat_num + "&present_use=" + present_use;
 
 
                         try {
@@ -688,4 +706,7 @@ public class MainReservation extends Activity {
 
                     }
                 }
-            }
+
+    }
+
+
