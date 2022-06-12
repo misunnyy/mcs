@@ -14,8 +14,6 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
 
-
-
         ImageButton BtnUser = (ImageButton)findViewById(R.id.BtnUser);
         ImageButton BtnReservation = (ImageButton) findViewById(R.id.BtnReservation);
         ImageButton BtnMap = (ImageButton)findViewById(R.id.BtnMap);

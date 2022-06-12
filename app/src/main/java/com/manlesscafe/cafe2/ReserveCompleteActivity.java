@@ -15,6 +15,8 @@ import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.manlesscafe.cafe2.Data.MemberData;
+import com.manlesscafe.cafe2.Data.MyData;
+import com.manlesscafe.cafe2.Data.ReserveData;
 import com.manlesscafe.cafe2.Data.SeatData;
 
 import java.io.IOException;
@@ -31,8 +33,10 @@ public class ReserveCompleteActivity extends Activity {
     private static String IP_ADDRESS = "10.0.2.2:81";
     private static String TAG = "db";
 
-    MemberData data;
+    MemberData memberData;
     SeatData tdata;
+    ReserveData reserveData;
+    MyData mydata;
 
     private Context mContext;
     long mNow;
@@ -49,40 +53,48 @@ public class ReserveCompleteActivity extends Activity {
         tv = (TextView)findViewById(R.id.tv);
 
 
-        tv.setText(data.getId());
+        tv.setText(memberData.getId());
         String sendid = tv.getText().toString();
 
-        Intent mIntent = getIntent();
-        if (mIntent != null ){
-            data = (MemberData) mIntent.getSerializableExtra("mresult");
-        }
-        Intent nIntent = getIntent();
-        if (nIntent != null ){
-            tdata = (SeatData) nIntent.getSerializableExtra("sresult");
-        }
 
+        //data = (MemberData) intent.getSerializableExtra("memberData");
+        /*
+        * intent -> memberData / searNum
+        * */
+//        Intent mIntent = getIntent();
+//        if (mIntent != null ){
+//            data = (MemberData) mIntent.getSerializableExtra("memberData");
+//        }
+//        Intent nIntent = getIntent();
+//        if (nIntent != null ){
+//            tdata = (SeatData) nIntent.getSerializableExtra("sresult");
+//        }
+//        Intent rIntent = getIntent();
+//        if (rIntent != null ){
+//            reserveData = (ReserveData) rIntent.getSerializableExtra("reserveResult");
+//        }
 
         String seat;
         Intent intent = getIntent();
-        seat = intent.getStringExtra("selectseat");
+        if (intent != null ) {
+            memberData = (MemberData) intent.getSerializableExtra("memberData");
+            seat = intent.getStringExtra("selectseat");
 
-        reserveSeat.setText(seat);
-        String sendseat = reserveSeat.getText().toString();
-        presentDate.setText(getTime());
-
+            reserveSeat.setText(seat);
+            presentDate.setText(getTime());
+        }
 
         Button BtnCheck1 = (Button)findViewById(R.id.BtnCheck1);
         BtnCheck1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String reserveseat1 = reserveSeat.getText().toString();
-                reserveseat1 = tdata.getSeat_num();
 
-                new reservecomplete().execute(data.getId(), reserveseat1);  //reservecomplete class 실행하기 (일단 보류)
+                new reservecomplete().execute(memberData.getId(), memberData.getSeat().getSeat_num());  //reservecomplete class 실행하기 (일단 보류)
 
-                Intent intent = new Intent(getApplicationContext(), MainMypage.class);
-                //intent.putExtra("selectseat",reserveseat1);
-                startActivity(intent);
+//                Intent intent = new Intent(getApplicationContext(), MainMypage.class);
+//                //intent.putExtra("selectseat",reserveseat1);
+//                startActivity(intent);
+                finish();
             }
         });
     }
@@ -98,7 +110,7 @@ public class ReserveCompleteActivity extends Activity {
 
     }
 
-    String url = "http://www.stander-mcs.com/rest_reserve/complete";
+    String url = "http://39.115.156.83:8080/rest_reserve/complete";
 
     class reservecomplete extends AsyncTask<String, Void, String> {
         @Override
@@ -115,11 +127,15 @@ public class ReserveCompleteActivity extends Activity {
             } else {
                 Log.e("mresult", s);
                 Gson gson = new Gson();
-                SeatData tdata = gson.fromJson(s, SeatData.class); //GSON으로 변환
-                //                if(data.getCheck_in().equals("")){
-                Intent intent = new Intent(getApplicationContext(), MainMypage.class);
-                intent.putExtra("mresult", tdata);
-                startActivity(intent);
+//                MyPageData mypagedata = gson.fromJson(s, MyPageData.class); //GSON으로 변환
+//                Intent intent = new Intent(getApplicationContext(), MainMypage.class);
+//                intent.putExtra("mresult",mypagedata);
+//                startActivity(intent);
+//                //                if(data.getCheck_in().equals("")){
+////                Intent intent = new Intent(getApplicationContext(), MainMypage.class);
+////                intent.putExtra("mresult", tdata);
+////                startActivity(intent);
+//                finish();
                 //                }
                 //                else{
                 //                    Toast.makeText(mContext, "", Toast.LENGTH_SHORT).show();
@@ -130,7 +146,6 @@ public class ReserveCompleteActivity extends Activity {
         }
         @Override
         protected String doInBackground(String... strings){
-            //strings[0] = data.getId();
             RequestBody formBody = new FormBody.Builder()
                     .add("id",strings[0])
                     .add("seat_num",strings[1])

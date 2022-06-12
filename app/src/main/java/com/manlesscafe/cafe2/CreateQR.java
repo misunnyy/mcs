@@ -14,11 +14,14 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
+import com.manlesscafe.cafe2.Data.MemberData;
 
 public class CreateQR extends AppCompatActivity {
     private ImageView qrcode;
     private String text;
     ImageButton backBtn;
+
+    MemberData data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

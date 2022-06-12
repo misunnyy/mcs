@@ -3,6 +3,7 @@ package com.manlesscafe.cafe2.Data;
 import java.io.Serializable;
 
 public class MemberData implements Serializable {
+
     String id;
     String name;
     String username;
@@ -10,10 +11,18 @@ public class MemberData implements Serializable {
     String email;
     String gender;
     String age;
-    String seat;
+    SeatData seat;
     String qr;
     String time;
     String check_in;
+
+    // PM
+    // 1. 서버 -> 어디로 호출 / 무슨 결과를 주는지
+    // 2. 포스트맨 확인
+    // 3. 확인 결과로 Data 클래스 생성
+    // 4. 로그인 / 마이데이터
+
+
 
     public String getId() {
         return id;
@@ -71,11 +80,11 @@ public class MemberData implements Serializable {
         this.age = age;
     }
 
-    public String getSeat() {
+    public SeatData getSeat() {
         return seat;
     }
 
-    public void setSeat(String seat) {
+    public void setSeat(SeatData seat) {
         this.seat = seat;
     }
 

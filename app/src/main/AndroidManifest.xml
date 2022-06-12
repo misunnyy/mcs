@@ -16,7 +16,6 @@
         <activity android:name=".MainLogin">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -29,7 +28,9 @@
         <activity android:name=".MainMypage"/>
         <activity android:name=".PayCompleteActivity"/>
         <activity android:name=".InformationFindActivity" />
-        <activity android:name=".UsageHistoryActivity"/>
+        <activity android:name=".UsageHistoryActivity">
+
+        </activity>
         <activity android:name=".ReserveCompleteActivity"/>
         <activity android:name=".CreateQR"/>
     </application>

@@ -31,7 +31,7 @@ public class TicketBuyActivity extends Activity {
     private static String TAG = "db";
     private Context mContext;
 
-    MemberData data;
+    MemberData memberData;
     MyPageData myPageData;
     SeatData tdata;
 
@@ -43,10 +43,10 @@ public class TicketBuyActivity extends Activity {
         Log.e("TicketBuyActivity","TicketBuyActivity");
 
         Intent tempIntent = getIntent();
-        data = (MemberData) tempIntent.getSerializableExtra("mresult");
-        myPageData = (MyPageData) tempIntent.getSerializableExtra("myPageData");
+        memberData = (MemberData) tempIntent.getSerializableExtra("memberData");
+        myPageData = (MyPageData) tempIntent.getSerializableExtra("myPageData");//우리
 
-        data.getId();
+        memberData.getId();
 
 
         mContext = this;
@@ -55,10 +55,10 @@ public class TicketBuyActivity extends Activity {
 
         Intent mIntent = getIntent(); //MySQL에 저장된 member 객체 불러오기
         if (mIntent != null ){
-            data = (MemberData) mIntent.getSerializableExtra("mresult");
+            memberData = (MemberData) mIntent.getSerializableExtra("memberData");
         }
 
-        tv.setText(data.getId());
+        //tv.setText(memberData.getId());
         //String sendid = tv.getText().toString();
 
         TextView selecttime = (TextView) findViewById(R.id.selecttime);
@@ -208,7 +208,7 @@ public class TicketBuyActivity extends Activity {
 //                    int minute = time % (60 * 60) / 60;
 //                    int second = time % 60;
 
-                        new pay().execute(data.getId(),time1);
+                        new pay().execute(memberData.getId(),time1);
 //                        Intent intent = new Intent(TicketBuyActivity.this, MainMypage.class);
 //                        //intent.putExtra("reservetime", day + "일 " + hour + "시간 " + minute + "분" + second + "초");
 //                        startActivity(intent);
@@ -256,7 +256,7 @@ public class TicketBuyActivity extends Activity {
         });
 
     }
-    String url ="http://www.stander-mcs.com/rest_pay";
+    String url ="http://39.115.156.83:8080/rest_pay";
 
     class pay extends AsyncTask<String, Void, String> {
         @Override

@@ -7,6 +7,7 @@ public class MyData implements Serializable {
     MemberData member;
     String time;
 
+
     public MemberData getMember() {
         return member;
     }
@@ -22,4 +23,6 @@ public class MyData implements Serializable {
     public void setTime(String time) {
         this.time = time;
     }
+
+
 }

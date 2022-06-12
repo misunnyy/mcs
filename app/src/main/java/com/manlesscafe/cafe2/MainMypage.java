@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.manlesscafe.cafe2.Data.MemberData;
-import com.manlesscafe.cafe2.Data.MyData;
 import com.manlesscafe.cafe2.Data.MyPageData;
 import com.manlesscafe.cafe2.Data.SeatData;
 
@@ -33,9 +32,10 @@ public class MainMypage extends Activity implements View.OnClickListener {
     TextView mypage_name, mypage_email, tv;
     String mJsonString;
 
-    MemberData data;
+    MyPageData mypagedata;
+    MemberData memberData;
     SeatData tdata;
-    MyPageData myPageData;
+    //MyPageData myPageData;
 
     TextView reserve_seat, charge_time;
     Button checkIn, checkout,usage_history;
@@ -51,17 +51,21 @@ public class MainMypage extends Activity implements View.OnClickListener {
         Log.e("MainMypage","MainMypage");
 
         if (intent != null) {
-            data = (MemberData) intent.getSerializableExtra("mresult");
+            mypagedata = (MyPageData) intent.getSerializableExtra("mresult");
+            memberData = (MemberData) intent.getSerializableExtra("memberData");
             tdata = (SeatData) intent.getSerializableExtra("sresult");
-            myPageData = (MyPageData) intent.getSerializableExtra("myPageData") ;
+            //myPageData = (MyPageData) intent.getSerializableExtra("myPageData") ;
 
-            mypage_name.setText(data.getName());
-            mypage_email.setText(data.getEmail());
+//            mypage_name.setText(mypagedata.getMember().getName());
+//            mypage_email.setText(mypagedata.getMember().getEmail());
 
-            tv.setText(data.getId());
+            mypage_name.setText(memberData.getName());
+            mypage_email.setText(memberData.getEmail());
+
+            tv.setText(memberData.getId());
             //charge_time.setText(data.getTime());
 
-            int time = Integer.valueOf(data.getTime());
+            int time = Integer.valueOf(memberData.getTime());
 
             setTime(time);
 
@@ -78,7 +82,7 @@ public class MainMypage extends Activity implements View.OnClickListener {
         qrcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (data.getQr() != null) {
+                if (memberData.getQr() != null) {
                     Intent intent3 = new Intent(getApplicationContext(), CreateQR.class);
                     startActivity(intent3);
                 } else {
@@ -149,7 +153,7 @@ public class MainMypage extends Activity implements View.OnClickListener {
                 //Intent intent = new Intent(getApplicationContext(), TicketBuyActivity.class);
                 //intent.putExtra("mresult",data);
                 //startActivity(intent);
-                new mypage().execute(data.getId());
+                new mypage().execute(memberData.getId());
             }
         });
     }
@@ -161,14 +165,20 @@ public class MainMypage extends Activity implements View.OnClickListener {
         int second = time % 60;
 
         charge_time.setText(day+"일"+hour+"시간"+minute+"분"+second+"초");
-        data.setTime(day+"일"+hour+"시간"+minute+"분"+second+"초");
+        memberData.setTime(day+"일"+hour+"시간"+minute+"분"+second+"초");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e("재실행","mypayge Resume");
-        new getMyData().execute(data.getId());
+        Log.e("재실행","mypage Resume" + memberData.getId());
+        if (memberData.getId() != null) {
+            new getMyData().execute(memberData.getId());
+        }
+
+        //new getMy
+        //new checkoutData().execute(data.getId());
+        //new getSeatMyData().execute(data.getSeat());
     }
 
     private void init() {
@@ -186,7 +196,7 @@ public class MainMypage extends Activity implements View.OnClickListener {
     }
 
     String tempUrl = "rest_mypage";
-    String url = "http://www.stander-mcs.com/";
+    String url = "http://39.115.156.83:8080/";
 
     @Override
     public void onClick(View v) {
@@ -194,39 +204,47 @@ public class MainMypage extends Activity implements View.OnClickListener {
             case R.id.checkin:
                 Intent sIntent = getIntent(); //받은 seat_num이 아직 없어 고쳐야함
                 if (sIntent != null) {
-                    tdata = (SeatData) sIntent.getSerializableExtra("selectseat");
 
-                    //TODO 임의주석
-                    Intent intent1 = new Intent(getApplicationContext(), MainReservation.class);
-                    startActivity(intent1);
-                } else {
-                    //reserve_seat.setText(tdata.getSeat_num());
-                    Toast.makeText(getApplicationContext(), "시간을 충전해주세요.", Toast.LENGTH_SHORT).show();
+                    memberData = (MemberData) sIntent.getSerializableExtra("memberData");
+                    if (memberData.getSeat() == null) {
+
+                        reserve_seat.setText(memberData.getSeat().getSeat_num());
+                        //TODO 임의주석
+                        Intent intent1 = new Intent(getApplicationContext(), MainReservation.class);
+                        intent1.putExtra("memberData", memberData);
+                        startActivity(intent1);
+                    } else {
+
+                        Toast.makeText(getApplicationContext(), "시간을 충전해주세요.", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 break;
 
             case R.id.checkout:
-                Intent outIntent = getIntent(); //받은 seat_num이 아직 없어 고쳐야함
-                if (outIntent != null) {
-                    tdata = (SeatData) outIntent.getSerializableExtra("selectseat");
-
-                    tdata.setSeat_num(null);
                     //TODO 임의주석
-                    Intent intent1 = new Intent(getApplicationContext(), MainReservation.class);
-                    startActivity(intent1);
-                }
-                Toast.makeText(getApplicationContext(), "퇴실처리 되었습니다.", Toast.LENGTH_SHORT).show();
+
+                    new checkoutData().execute(memberData.getId());
+                    reserve_seat.setText("");
+//                    Toast.makeText(getApplicationContext(), "퇴실처리 되었습니다.", Toast.LENGTH_SHORT).show();
+//
+//                    Toast.makeText(getApplicationContext(), "예약된 좌석이 없습니다.", Toast.LENGTH_SHORT).show();
+
                 break;
 
             case R.id.usage_history:
-                Intent intent2 = new Intent(getApplicationContext(), UsageHistoryActivity.class);
-                //intent2.putExtra("history", data);
-                startActivity(intent2);
-                break;
+                Intent hIntent = getIntent(); //받은 seat_num이 아직 없어 고쳐야함
+                if (hIntent != null) {
+                    Intent intent2 = new Intent(getApplicationContext(), UsageHistoryActivity.class);
+                    intent2.putExtra("memberData", memberData);
+                    startActivity(intent2);
+                    //new history().execute(data.getId());
+//                    new history().execute(data.getId());
+                    break;
+                }
         }
     }
 
-    class mypage extends AsyncTask<String, Void, String> {
+    class mypage extends AsyncTask<String, Void, String> { //로그인 -> member 회원정보 불러오기
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -238,11 +256,11 @@ public class MainMypage extends Activity implements View.OnClickListener {
             if (s != null) {
                 Log.e("result2", s);
                 Gson gson = new Gson();
-                MyPageData myPageData = gson.fromJson(s, MyPageData.class);
+                //MyPageData myPageData = gson.fromJson(s, MyPageData.class);
 //                MemberData data = gson.fromJson(s, MemberData.class); //GSON으로 변환
                 Intent intent = new Intent(getApplicationContext(), TicketBuyActivity.class);
-                intent.putExtra("mresult", data);
-                intent.putExtra("myPageData",myPageData);
+                intent.putExtra("memberData", memberData);
+                //intent.putExtra("myPageData",myPageData);
                 startActivity(intent);
             } else {
                 Log.e("test", s);
@@ -285,7 +303,7 @@ public class MainMypage extends Activity implements View.OnClickListener {
         }
     }
 
-    class getMyData extends AsyncTask<String, Void, String> {
+    class getMyData extends AsyncTask<String, Void, String> { //ticket -> mypage member 데이터 불러오기
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -297,8 +315,9 @@ public class MainMypage extends Activity implements View.OnClickListener {
             if (s!= null){
                 Log.e("getMyData Result",s);
                 Gson gson = new Gson();
-                MyData myData = gson.fromJson(s,MyData.class);
+                MyPageData myData = gson.fromJson(s,MyPageData.class);
 
+                reserve_seat.setText(myData.getSeat_num());
                 charge_time.setText(myData.getTime());
 //                setTime(Integer.parseInt(myData.getTime()));
             }
@@ -311,7 +330,7 @@ public class MainMypage extends Activity implements View.OnClickListener {
 
         @Override
         protected String doInBackground(String... strings) {
-            String url ="http://www.stander-mcs.com/rest_mypage";
+            String url ="http://39.115.156.83:8080/rest_mypage";
 
             RequestBody formBody = new FormBody.Builder()
                     .add("id",strings[0])
@@ -336,5 +355,166 @@ public class MainMypage extends Activity implements View.OnClickListener {
         }
     }
 
+    class getSeatMyData extends AsyncTask<String, Void, String> { // rest_reserve/complete에서 seat_num 가져와서 마이페이지에 받아오기
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
 
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (s!= null){
+                Log.e("getSeatMyData Result",s);
+                Gson gson = new Gson();
+                SeatData seatmyData = gson.fromJson(s,SeatData.class);
+
+                reserve_seat.setText(seatmyData.getSeat_num());
+//                setTime(Integer.parseInt(myData.getTime()));
+            }
+            else {
+                //
+                Log.e("getseatmydata","err");
+            }
+
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String url ="http://39.115.156.83:8080/rest_mypage";
+
+            RequestBody formBody = new FormBody.Builder()
+                    .add("id",strings[0]) //보류
+//                    .add("password",strings[1])
+                    .build();
+
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+                    .url(url)
+                    .post(formBody)
+                    .build();
+            try {
+                Response response = client.newCall(request).execute();
+                return response.body().string();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.e("log Err",e.toString());
+                return null;
+            }
+
+        }
+    }
+    class checkoutData extends AsyncTask<String, Void, String> { //체크아웃할 때 id 오빠한테 보내고 퇴실처리
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (s!= null){
+                Log.e("checkOut Result1",s);
+                Gson gson = new Gson();
+                //MemberData myData = gson.fromJson(s,MemberData.class);
+                Log.e("checkOut Result2",s);
+                //charge_time.setText(myData.getTime());
+                Toast.makeText(mContext, "퇴실이 완료되었습니다.", Toast.LENGTH_SHORT).show();
+
+                //reserve_seat.setText(tdata.getSeat_num());
+//                setTime(Integer.parseInt(myData.getTime()));
+            }
+            else {
+                //
+                Log.e("checkout","err");
+            }
+
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String url ="http://39.115.156.83:8080/rest_reserve/clear";
+
+            RequestBody formBody = new FormBody.Builder()
+                    .add("id",strings[0])
+                    .build();
+
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+                    .url(url)
+                    .post(formBody)
+                    .build();
+            try {
+                Response response = client.newCall(request).execute();
+                return response.body().string();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.e("log Err",e.toString());
+                return null;
+            }
+
+        }
+    }
+    class history extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (s != null) {
+                Log.e("Prehistory", s);
+
+                //Txtcheckin.setText(s);
+                Gson gson = new Gson();
+                //MyData myData = gson.fromJson(s, MyData.class);
+//                MemberData data = gson.fromJson(s, MemberData.class); //GSON으로 변환
+                Intent intent = new Intent(getApplicationContext(), UsageHistoryActivity.class);
+                intent.putExtra("memberData", memberData);
+                //intent.putExtra("myPageData",myPageData);
+                startActivity(intent);
+                //Toast.makeText(mContext, "등록이 완료되었습니다.", Toast.LENGTH_SHORT).show();
+                /*
+                SeatData tdata = gson.fromJson(s, SeatData.class); //GSON으로 변환
+                Intent intent = new Intent(getApplicationContext(), MainMypage.class);
+                intent.putExtra("sresult", tdata);
+                startActivity(intent);*/
+            } else {
+                Log.e("test", s);
+
+                Toast.makeText(mContext, "Err", Toast.LENGTH_SHORT).show();
+            }
+
+
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            //strings[0] = data.getId();
+            String url ="http://39.115.156.83:8080/rest_mypage";
+            RequestBody formBody = new FormBody.Builder()
+                    .add("id", strings[0])
+                    .build();
+
+
+            Request request = new Request.Builder()
+//                    .header()
+                    .url(url)
+                    .post(formBody)
+                    .build();
+            OkHttpClient client = new OkHttpClient();
+
+            try {
+                Response response = client.newCall(request).execute();
+                return response.body().string();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+    }
 }

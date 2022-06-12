@@ -17,7 +17,9 @@ import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.manlesscafe.cafe2.Data.MemberData;
+import com.manlesscafe.cafe2.Data.MyPageData;
 import com.manlesscafe.cafe2.Data.ReserveData;
+import com.manlesscafe.cafe2.Data.SeatData;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -38,12 +40,36 @@ public class MainReservation extends Activity {
     Button btnchoice;
     TextView selectnum;
 
-    MemberData data;
+    MemberData memberData;
     ReserveData reserveData;
+    SeatData tdata;
+    MyPageData mypagedata;
 
     long mNow;
     Date mDate;
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+    Button selectedBtn1;
+    Button selectedBtn2;
+    Button selectedBtn3;
+    Button selectedBtn4;
+    Button selectedBtn5;
+    Button selectedBtn6;
+    Button selectedBtn7;
+    Button selectedBtn8;
+    Button selectedBtn9;
+    Button selectedBtn10;
+    Button selectedBtn11;
+    Button selectedBtn12;
+    Button selectedBtn13;
+    Button selectedBtn14;
+    Button selectedBtn15;
+    Button selectedBtn16;
+    Button selectedBtn17;
+    Button selectedBtn18;
+    Button selectedBtn19;
+
+    //MemberData memberData;
 
     public void onCreate(Bundle savesInstanceState) {
         super.onCreate(savesInstanceState);
@@ -51,11 +77,34 @@ public class MainReservation extends Activity {
         mContext = this;
         btnchoice = (Button) findViewById(R.id.BtnChoice);
         selectnum = (TextView) findViewById(R.id.selectnum);
+
+        Intent intent = getIntent();
+        memberData = (MemberData) intent.getSerializableExtra("memberData");
         Log.e("MainReservation","MainReservation");
+
+        selectedBtn1 = findViewById(R.id.BtnTable1);
+        selectedBtn2 = findViewById(R.id.BtnTable2);
+        selectedBtn3 = findViewById(R.id.BtnTable3);
+        selectedBtn4 = findViewById(R.id.BtnTable4);
+        selectedBtn5 = findViewById(R.id.BtnTable5);
+        selectedBtn6 = findViewById(R.id.BtnTable6);
+        selectedBtn7 = findViewById(R.id.BtnTable7);
+        selectedBtn8 = findViewById(R.id.BtnTable8);
+        selectedBtn9 = findViewById(R.id.BtnTable9);
+        selectedBtn10 = findViewById(R.id.BtnTable10);
+        selectedBtn11 = findViewById(R.id.BtnTable11);
+        selectedBtn12 = findViewById(R.id.BtnTable12);
+        selectedBtn13 = findViewById(R.id.BtnTable13);
+        selectedBtn14 = findViewById(R.id.BtnTable14);
+        selectedBtn15 = findViewById(R.id.BtnTable15);
+        selectedBtn16 = findViewById(R.id.BtnTable16);
+        selectedBtn17 = findViewById(R.id.BtnTable17);
+        selectedBtn18 = findViewById(R.id.BtnTable18);
+        selectedBtn19 = findViewById(R.id.BtnTable19);
 
         Intent mIntent = getIntent();
         if (mIntent != null ){
-            data = (MemberData) mIntent.getSerializableExtra("mresult");
+            memberData = (MemberData) mIntent.getSerializableExtra("memberData");
         }
 
         Intent rIntent = getIntent();
@@ -98,25 +147,6 @@ public class MainReservation extends Activity {
         });
         //final TextView[] selectednum = new TextView[19];
 
-        Button selectedBtn1 = findViewById(R.id.BtnTable1);
-        Button selectedBtn2 = findViewById(R.id.BtnTable2);
-        Button selectedBtn3 = findViewById(R.id.BtnTable3);
-        Button selectedBtn4 = findViewById(R.id.BtnTable4);
-        Button selectedBtn5 = findViewById(R.id.BtnTable5);
-        Button selectedBtn6 = findViewById(R.id.BtnTable6);
-        Button selectedBtn7 = findViewById(R.id.BtnTable7);
-        Button selectedBtn8 = findViewById(R.id.BtnTable8);
-        Button selectedBtn9 = findViewById(R.id.BtnTable9);
-        Button selectedBtn10 = findViewById(R.id.BtnTable10);
-        Button selectedBtn11 = findViewById(R.id.BtnTable11);
-        Button selectedBtn12 = findViewById(R.id.BtnTable12);
-        Button selectedBtn13 = findViewById(R.id.BtnTable13);
-        Button selectedBtn14 = findViewById(R.id.BtnTable14);
-        Button selectedBtn15 = findViewById(R.id.BtnTable15);
-        Button selectedBtn16 = findViewById(R.id.BtnTable16);
-        Button selectedBtn17 = findViewById(R.id.BtnTable17);
-        Button selectedBtn18 = findViewById(R.id.BtnTable18);
-        Button selectedBtn19 = findViewById(R.id.BtnTable19);
 
         Button[] numButtons = new Button[19];
         Integer[] numBtnIDs = {R.id.BtnTable1, R.id.BtnTable2, R.id.BtnTable3, R.id.BtnTable4, R.id.BtnTable5,
@@ -590,16 +620,26 @@ public class MainReservation extends Activity {
                 }*/
                 if (selectnum.length() <= 0) {
                     Toast.makeText(getApplicationContext(), "좌석을 선택하세요.", Toast.LENGTH_SHORT).show();
-                } else {
+                }
+                else if(memberData.getSeat().getSeat_num() != null){
+
                     String seat_num = selectnum.getText().toString();
-
-
                     Intent intent = new Intent(MainReservation.this, ReserveCompleteActivity.class);
                     intent.putExtra("selectseat", seat_num);
+                    intent.putExtra("memberData", memberData);
                     startActivity(intent);
+                    finish();
+
+                    //
+
                     Toast.makeText(getApplicationContext(), "예약완료", Toast.LENGTH_SHORT).show();
 
                     Log.d(TAG, "POST response  - " + getTime() + seat_num);
+                }
+                else{
+
+                    Toast.makeText(getApplicationContext(), "좌석이 이미 예약되어 있습니다.", Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
@@ -617,7 +657,14 @@ public class MainReservation extends Activity {
 
     }
 
-    String url = "http://www.stander-mcs.com/rest_reserve";
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e("재실행","mypayge Resume");
+        new reserve().execute();
+    }
+
+    String url = "http://39.115.156.83:8080/rest_reserve";
 
     class reserve extends AsyncTask<String, Void, String> { //비동기식 전송방식
         @Override
@@ -635,19 +682,171 @@ public class MainReservation extends Activity {
                 Log.e("mresult", s);
                 Gson gson = new Gson();
                 ReserveData data = gson.fromJson(s, ReserveData.class); //GSON으로 변환
+                if (data != null) {
+                    //Log.e("4",data.getSeat4());
+                    if (data.getSeat1() != null) {
 
-                Log.e("4",data.getSeat4());
+                        selectedBtn1.setText(data.getSeat1());
+                        selectedBtn1.setEnabled(false);
+                    } else {
+                        selectedBtn1.setEnabled(true);
+                    }
+                    if (data.getSeat2() != null) {
 
-                //                if(data.getCheck_in().equals("")){
+                        selectedBtn2.setText(data.getSeat2());
+                        selectedBtn2.setEnabled(false);
+                    } else {
+                        selectedBtn2.setEnabled(true);
+                    }
+                    if (data.getSeat3() != null) {
+
+                        selectedBtn3.setText(data.getSeat3());
+                        selectedBtn3.setEnabled(false);
+                    } else {
+                        selectedBtn3.setEnabled(true);
+                    }
+                    if (data.getSeat4() != null) {
+
+                        selectedBtn4.setText(data.getSeat4());
+                        selectedBtn4.setEnabled(false);
+                    } else {
+                        selectedBtn4.setEnabled(true);
+                    }
+                    if (data.getSeat5() != null) {
+
+                        selectedBtn5.setText(data.getSeat5());
+                        selectedBtn5.setEnabled(false);
+                    } else {
+                        selectedBtn5.setEnabled(true);
+                    }
+                    if (data.getSeat6() != null) {
+
+                        selectedBtn6.setText(data.getSeat6());
+                        selectedBtn6.setEnabled(false);
+                    } else {
+                        selectedBtn6.setEnabled(true);
+                    }
+                    if (data.getSeat7() != null) {
+
+                        selectedBtn7.setText(data.getSeat7());
+                        selectedBtn7.setEnabled(false);
+                    } else {
+                        selectedBtn7.setEnabled(true);
+                    }
+                    if (data.getSeat8() != null) {
+
+                        selectedBtn8.setText(data.getSeat8());
+                        selectedBtn8.setEnabled(false);
+                    } else {
+                        selectedBtn8.setEnabled(true);
+                    }
+                    if (data.getSeat9() != null) {
+
+                        selectedBtn9.setText(data.getSeat9());
+                        selectedBtn9.setEnabled(false);
+                    } else {
+                        selectedBtn9.setEnabled(true);
+                    }
+                    if (data.getSeat10() != null) {
+
+                        selectedBtn10.setText(data.getSeat10());
+                        selectedBtn10.setEnabled(false);
+                    } else {
+                        selectedBtn10.setEnabled(true);
+                    }
+                    if (data.getSeat11() != null) {
+
+                        selectedBtn11.setText(data.getSeat11());
+                        selectedBtn11.setEnabled(false);
+                    } else {
+                        selectedBtn11.setEnabled(true);
+                    }
+                    if (data.getSeat12() != null) {
+
+                        selectedBtn12.setText(data.getSeat12());
+                        selectedBtn12.setEnabled(false);
+                    } else {
+                        selectedBtn12.setEnabled(true);
+                    }
+                    if (data.getSeat13() != null) {
+
+                        selectedBtn13.setText(data.getSeat13());
+                        selectedBtn13.setEnabled(false);
+                    } else {
+                        selectedBtn13.setEnabled(true);
+                    }
+                    if (data.getSeat14() != null) {
+
+                        selectedBtn14.setText(data.getSeat14());
+                        selectedBtn14.setEnabled(false);
+                    } else {
+                        selectedBtn14.setEnabled(true);
+                    }
+                    if (data.getSeat15() != null) {
+
+                        selectedBtn15.setText(data.getSeat15());
+                        selectedBtn15.setEnabled(false);
+                    } else {
+                        selectedBtn15.setEnabled(true);
+                    }
+                    if (data.getSeat16() != null) {
+
+                        selectedBtn16.setText(data.getSeat16());
+                        selectedBtn16.setEnabled(false);
+                    } else {
+                        selectedBtn16.setEnabled(true);
+                    }
+                    if (data.getSeat17() != null) {
+
+                        selectedBtn17.setText(data.getSeat17());
+                        selectedBtn17.setEnabled(false);
+                    } else {
+                        selectedBtn17.setEnabled(true);
+                    }
+                    if (data.getSeat18() != null) {
+
+                        selectedBtn18.setText(data.getSeat18());
+                        selectedBtn18.setEnabled(false);
+                    } else {
+                        selectedBtn18.setEnabled(true);
+                    }
+                    if (data.getSeat19() != null) {
+
+                        selectedBtn19.setText(data.getSeat19());
+                        selectedBtn19.setEnabled(false);
+                    } else {
+                        selectedBtn19.setEnabled(true);
+                    }
+                    //                if(data.getCheck_in().equals("")){
 //                Intent intent = new Intent(getApplicationContext(), MainMypage.class);
 //                intent.putExtra("mresult", data);
 //                startActivity(intent);
-                //                }
-                //                else{
-                //                    Toast.makeText(mContext, "", Toast.LENGTH_SHORT).show();
-                //                }
+                    //                }
+                    //                else{
+                    //                    Toast.makeText(mContext, "", Toast.LENGTH_SHORT).show();
+                    //                }
+                } else {
+                    selectedBtn1.setEnabled(true);
+                    selectedBtn2.setEnabled(true);
+                    selectedBtn3.setEnabled(true);
+                    selectedBtn4.setEnabled(true);
+                    selectedBtn5.setEnabled(true);
+                    selectedBtn6.setEnabled(true);
+                    selectedBtn7.setEnabled(true);
+                    selectedBtn8.setEnabled(true);
+                    selectedBtn9.setEnabled(true);
+                    selectedBtn10.setEnabled(true);
+                    selectedBtn11.setEnabled(true);
+                    selectedBtn12.setEnabled(true);
+                    selectedBtn13.setEnabled(true);
+                    selectedBtn14.setEnabled(true);
+                    selectedBtn15.setEnabled(true);
+                    selectedBtn16.setEnabled(true);
+                    selectedBtn17.setEnabled(true);
+                    selectedBtn18.setEnabled(true);
+                    selectedBtn19.setEnabled(true);
+                }
             }
-
 
         }
         @Override

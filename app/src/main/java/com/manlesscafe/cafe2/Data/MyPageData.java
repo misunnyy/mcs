@@ -4,25 +4,16 @@ import java.io.Serializable;
 
 public class MyPageData implements Serializable {
     // 어떤 형태의 데이터
-    //id , time,
-    String id;
-    String seat;
+    MemberData member;
     String time;
+    String seat_num;
 
-    public String getId() {
-        return id;
+    public MemberData getMember() {
+        return member;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getSeat() {
-        return seat;
-    }
-
-    public void setSeat(String seat) {
-        this.seat = seat;
+    public void setMember(MemberData member) {
+        this.member = member;
     }
 
     public String getTime() {
@@ -31,5 +22,13 @@ public class MyPageData implements Serializable {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getSeat_num() {
+        return seat_num;
+    }
+
+    public void setSeat_num(String seat_num) {
+        this.seat_num = seat_num;
     }
 }

@@ -3,19 +3,19 @@ package com.manlesscafe.cafe2.Data;
 import java.io.Serializable;
 
 public class SeatData implements Serializable {
-    String tid;
+    String id;
     String seat_num;
     String member;
     String present_use;
     String check_in;
     String check_out;
 
-    public String getTid() {
-        return tid;
+    public String getId() {
+        return id;
     }
 
-    public void setTid(String tid) {
-        this.tid = tid;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getSeat_num() {

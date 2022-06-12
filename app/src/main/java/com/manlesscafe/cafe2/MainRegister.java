@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.manlesscafe.cafe2.Data.MemberData;
+import com.manlesscafe.cafe2.Data.MyPageData;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -59,6 +60,7 @@ public class MainRegister extends AppCompatActivity {
     String sort = "userid";
 
     MemberData data;
+    MyPageData mypagedata;
 
 
     ArrayAdapter<String> arrayAdapter;
@@ -158,9 +160,10 @@ public class MainRegister extends AppCompatActivity {
         mEditTextemail.setText("");
         mEditTextusername.setText("");
     }
-    String url = "http://www.stander-mcs.com/rest_join";
+
 
     class register extends AsyncTask<String, Void, String> {
+        String url = "http://39.115.156.83:8080/rest_join";
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -172,15 +175,16 @@ public class MainRegister extends AppCompatActivity {
 
             if (s == null) {
                 Toast.makeText(mContext, "Server Error", Toast.LENGTH_SHORT).show();
-                Log.e("dpfj", s);
+                Log.e("register Result Null", s);
             } else {
-                Log.e("test", s);
+                Log.e("register Result", s);
                 Gson gson = new Gson();
-                MemberData data = gson.fromJson(s, MemberData.class); //GSON으로 변환
+//                MemberData data = gson.fromJson(s, MemberData.class); //GSON으로 변환
                 //                if(data.getCheck_in().equals("")){
-                Intent intent = new Intent(getApplicationContext(), MainMypage.class);
-                intent.putExtra("test", data);
-                startActivity(intent);
+//                Intent intent = new Intent(getApplicationContext(), MainMypage.class);
+//                intent.putExtra("test", data);
+//                startActivity(intent);
+                finish();
                 //                }
                 //                else{
                 //                    Toast.makeText(mContext, "", Toast.LENGTH_SHORT).show();

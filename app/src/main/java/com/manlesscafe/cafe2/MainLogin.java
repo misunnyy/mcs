@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,7 +49,7 @@ public class MainLogin extends AppCompatActivity {
         setContentView(R.layout.login_main);
         mContext = this; // 이거 필수!
 
-
+        Log.e("MainLogin","MainLogin");
 
         ID = (EditText) findViewById(R.id.ID);
         PW = (EditText) findViewById(R.id.PW);
@@ -91,9 +90,10 @@ public class MainLogin extends AppCompatActivity {
 
                 if (TextUtils.isEmpty(NAME) || TextUtils.isEmpty(PASSWORD)){
                     //아이디나 암호 둘 중 하나가 비어있으면 토스트메시지를 띄운다
-                    Toast.makeText(MainLogin.this, "아이디/암호를 입력해주세요",
-                            Toast.LENGTH_SHORT).show();
-                }else { //둘 다 충족하면 다음 동작을 구현해놓음
+                    Toast.makeText(MainLogin.this, "아이디/암호를 입력해주세요", Toast.LENGTH_SHORT).show();
+                }
+
+                else { //둘 다 충족하면 다음 동작을 구현해놓음
                     Log.e("mainLogin","name : " + NAME + " " + " pw : " + PASSWORD);
                     new login().execute(NAME,PASSWORD);
                     //new login().execute("test","!@#$asdf1234");
@@ -136,38 +136,7 @@ public class MainLogin extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        //ImageButton BtnUser = (ImageButton)findViewById(R.id.BtnUser);
-        ImageButton BtnReservation = (ImageButton) findViewById(R.id.BtnReservation);
-        ImageButton BtnMap = (ImageButton) findViewById(R.id.BtnMap);
-        ImageButton BtnEct = (ImageButton) findViewById(R.id.BtnEct);
 
-        BtnReservation.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Toast.makeText(MainLogin.this, "로그인 해주세용",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        BtnMap.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Toast.makeText(MainLogin.this, "로그인 해주세용",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        BtnEct.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Toast.makeText(MainLogin.this, "로그인 해주세용",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-        ImageButton BtnHome = (ImageButton) findViewById(R.id.BtnHome);
-        BtnHome.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Toast.makeText(MainLogin.this, "로그인 해주세용",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override
@@ -176,7 +145,7 @@ public class MainLogin extends AppCompatActivity {
 
     }
 
-    String url ="http://www.stander-mcs.com/rest-login";
+    String url ="http://39.115.156.83:8080/rest-login";
 
     class login extends AsyncTask<String, Void, String> {
         @Override
@@ -195,10 +164,14 @@ public class MainLogin extends AppCompatActivity {
             else {
                 Log.e("test",s);
                 Gson gson = new Gson();
-                MemberData data = gson.fromJson(s, MemberData.class); //GSON으로 변환
+//                MyPageData mypagedata = gson.fromJson(s, MyPageData.class); //GSON으로 변환
+
+                MemberData memberData = gson.fromJson(s, MemberData.class); //GSON으로 변환
+
+
 //                if(data.getCheck_in().equals("")){
                     Intent intent = new Intent(getApplicationContext(), MainMypage.class);
-                    intent.putExtra("mresult",data);
+                    intent.putExtra("memberData",memberData);
                     startActivity(intent);
 //                }
 //                else{
@@ -216,11 +189,8 @@ public class MainLogin extends AppCompatActivity {
                     .add("password",strings[1])
                     .build();
 
+            Log.e("pw","id ; " + strings[0] + " " + " pw : " + strings[1]);
 
-            //http://39.115.156.83:8080/rest-login?username=test&password=!@%23$asdf1234#$asfd1234
-            //http://39.115.156.83:8080/rest-login?username=test&password=!@#  $asdf1234#$asfd1234
-            //!@#$asdf1234
-            //http://39.115.156.83:8080/rest-login
 
 //            String makeUrl = url + "?username=" +  strings[0] + "&password=" + strings[1] + "#$asfd1234";
 //            Log.e("url",makeUrl);

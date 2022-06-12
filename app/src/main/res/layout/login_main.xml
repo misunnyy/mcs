@@ -12,24 +12,15 @@
         android:orientation="horizontal"
         android:layout_gravity="center">
 
-        <ImageButton
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="25dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/menu"
-            android:background="#FFFFFF"
-            />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="30dp"
             android:text="Manless Cafe System"
+            android:layout_marginLeft="80dp"
             android:textColor="#000000"
-            android:textSize="25dp"/>
+            android:textSize="25dp" />
 
     </LinearLayout>
 
@@ -133,63 +124,5 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/BtnUser"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="25dp"
-            android:background="#FFFFFF"
-            android:scaleType="fitCenter"
-            android:src="@drawable/user" />
-
-        <ImageButton
-            android:id="@+id/BtnReservation"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="30dp"
-            android:background="#FFFFFF"
-            android:scaleType="fitCenter"
-            android:src="@drawable/calendar"
-            android:text="예약"
-            android:textColor="#000000" />
-
-        <ImageButton
-            android:id="@+id/BtnHome"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="30dp"
-            android:background="#FFFFFF"
-            android:scaleType="fitCenter"
-            android:src="@drawable/home" />
-
-        <ImageButton
-            android:id="@+id/BtnMap"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="30dp"
-            android:background="#FFFFFF"
-            android:scaleType="fitCenter"
-            android:src="@drawable/place" />
-
-        <ImageButton
-            android:id="@+id/BtnEct"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="30dp"
-            android:background="#FFFFFF"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ect" />
-
-    </LinearLayout>
 </LinearLayout>

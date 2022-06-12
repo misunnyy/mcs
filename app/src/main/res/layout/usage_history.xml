@@ -34,23 +34,17 @@
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Button
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:id="@+id/Btnhistory"
         android:layout_gravity="center"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        android:id="@+id/tv" />
+        android:text="확인" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/Txtcheckin" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/Txtcheckout" />
 
 
 </LinearLayout>
