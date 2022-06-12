@@ -1,13 +1,9 @@
 package com.manlesscafe.cafe2;
 
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-
-public class UserService {
-    private DatabaseHelper dbHelper;
+/*public class UserService {
+    private DBOpenHelper dbHelper;
     public UserService(Context context){
-        dbHelper=new DatabaseHelper(context);
+        dbHelper=new DBOpenHelper(context);
     }
 
     public boolean login(String username,String password){
@@ -27,4 +23,4 @@ public class UserService {
         sdb.execSQL(sql, obj);
         return true;
     }
-}
+}*/

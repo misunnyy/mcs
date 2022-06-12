@@ -6,19 +6,19 @@ public class User implements Serializable{
     private int id;
     private String username;
     private String password;
-    private int age;
-    private String sex;
+    private String email;
+    private String name;
     public User() {
         super();
 // TODO Auto-generated constructor stub
     }
 
-    public User(String username, String password, int age, String sex) {
+    public User(String username, String password, String email, String name) {
         super();
         this.username = username;
         this.password = password;
-        this.age = age;
-        this.sex = sex;
+        this.email = email;
+        this.name = name;
     }
 
     public int getId() {
@@ -39,21 +39,21 @@ public class User implements Serializable{
     public void setPassword(String password) {
         this.password = password;
     }
-    public int getAge() {
-        return age;
+    public String getEmail() {
+        return email;
     }
-    public void setAge(int age) {
-        this.age = age;
+    public void setEmail(String email) {
+        this.email = email;
     }
-    public String getSex() {
-        return sex;
+    public String getName() {
+        return name;
     }
-    public void setSex(String sex) {
-        this.sex = sex;
+    public void setName(String name) {
+        this.name = name;
     }
     @Override
     public String toString() {
-        return "User [id=" + id + ", username=" + username + ", password=" + password + ", age=" + age + ", sex=" + sex + "]";
+        return "User [id=" + id + ", username=" + username + ", password=" + password + ", email=" + email + ", name=" + name + "]";
     }
 
 }

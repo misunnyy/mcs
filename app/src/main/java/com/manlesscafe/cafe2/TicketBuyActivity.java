@@ -1,7 +1,7 @@
 package com.manlesscafe.cafe2;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -13,27 +13,62 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import com.google.gson.Gson;
+import com.manlesscafe.cafe2.Data.MemberData;
+import com.manlesscafe.cafe2.Data.MyPageData;
+import com.manlesscafe.cafe2.Data.SeatData;
+
+import java.io.IOException;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class TicketBuyActivity extends Activity {
     private static String IP_ADDRESS = "10.0.2.2:81";
     private static String TAG = "db";
+    private Context mContext;
+
+    MemberData data;
+    MyPageData myPageData;
+    SeatData tdata;
 
     public void onCreate(Bundle savesInstanceState) {
         super.onCreate(savesInstanceState);
         setContentView(R.layout.ticket_buy);
         Button BtnBuy = (Button) findViewById(R.id.BtnBuy);
 
+        Log.e("TicketBuyActivity","TicketBuyActivity");
+
+        Intent tempIntent = getIntent();
+        data = (MemberData) tempIntent.getSerializableExtra("mresult");
+        myPageData = (MyPageData) tempIntent.getSerializableExtra("myPageData");
+
+        data.getId();
+
+
+        mContext = this;
+        TextView tv;
+        tv = (TextView)findViewById(R.id.tv);
+
+        Intent mIntent = getIntent(); //MySQL에 저장된 member 객체 불러오기
+        if (mIntent != null ){
+            data = (MemberData) mIntent.getSerializableExtra("mresult");
+        }
+
+        tv.setText(data.getId());
+        //String sendid = tv.getText().toString();
+
         TextView selecttime = (TextView) findViewById(R.id.selecttime);
         Button[] seatnumButtons = new Button[5];
         Integer[] seatnumBtnIDs = {R.id.BtnTimeTicket1, R.id.BtnTimeTicket3, R.id.BtnTimeTicket6, R.id.BtnTimeTicket9, R.id.BtnTimeTicket12};
         //Integer [] selecttimes = {900,10800,21600,32400,43200};
 
+        String TIME = selecttime.getText().toString();
+
+        //new pay().execute(TIME);  //pay class 실행하기
 
         Button BtnTimeTicket1, BtnTimeTicket3, BtnTimeTicket6, BtnTimeTicket9, BtnTimeTicket12;
 
@@ -166,24 +201,24 @@ public class TicketBuyActivity extends Activity {
                 } else {
                     String time1 = selecttime.getText().toString();
 
-                    int time = Integer.valueOf(time1);
+//                    int time = Integer.valueOf(time1);
+//
+//                    int day = time / (60 * 60 * 24);  // day *
+//                    int hour = time % (60 * 60 * 24) / (60 * 60);
+//                    int minute = time % (60 * 60) / 60;
+//                    int second = time % 60;
 
-                    int day = time / (60 * 60 * 24);  // day *
-                    int hour = time % (60 * 60 * 24) / (60 * 60);
-                    int minute = time % (60 * 60) / 60;
-                    int second = time % 60;
-                    InsertData task = new InsertData();
-
-                    task.execute("http://" + IP_ADDRESS + "/memberinsert.php", time1);
-
-                    Intent intent = new Intent(TicketBuyActivity.this, PayCompleteActivity.class);
-                    intent.putExtra("reservetime", day + "일 " + hour + "시간 " + minute + "분" + second + "초");
-                    startActivity(intent);
-
-                    Toast.makeText(getApplicationContext(), "결제완료", Toast.LENGTH_SHORT).show();
+                        new pay().execute(data.getId(),time1);
+//                        Intent intent = new Intent(TicketBuyActivity.this, MainMypage.class);
+//                        //intent.putExtra("reservetime", day + "일 " + hour + "시간 " + minute + "분" + second + "초");
+//                        startActivity(intent);
+                        Toast.makeText(getApplicationContext(), "결제완료", Toast.LENGTH_SHORT).show();
 
 
-                    Log.d(TAG, "POST response  - " + time);
+                        // A -> B -> C
+                    // 로그인 -> 마이페이지 ->
+
+                    //Log.d(TAG, "POST response  - " + time);
                 }
             }
         });
@@ -199,7 +234,7 @@ public class TicketBuyActivity extends Activity {
         ImageButton BtnUser = (ImageButton) findViewById(R.id.BtnUser);
         BtnUser.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainLogin.class);
+                Intent intent = new Intent(getApplicationContext(), MainMypage.class);
                 startActivity(intent);
             }
         });
@@ -221,91 +256,57 @@ public class TicketBuyActivity extends Activity {
         });
 
     }
-    class InsertData extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
+    String url ="http://www.stander-mcs.com/rest_pay";
 
+    class pay extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
-            progressDialog = ProgressDialog.show(TicketBuyActivity.this,
-                    "Please Wait", null, true, true);
         }
 
         @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
+        protected void onPostExecute(String s) { // s는 오빠가 보내주는 ok
+            super.onPostExecute(s);
 
-            progressDialog.dismiss();
-            Log.d(TAG, "POST response  - " + result);
-        }
-
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            //String id = (String)params[1];
-            // String check_in = (String)params[2];
-            //String check_out = (String)params[3];
-            //String present_use = (String)params[4];
-            String time = (String) params[1];
-            //boolean present_use = true;
-            //String member_id = (String)params[6];
-
-            String serverURL = (String) params[0];
-            String postParameters = "time=" + time;
-
-
-            try {
-
-                URL url = new URL(serverURL);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-
-                httpURLConnection.setReadTimeout(5000);
-                httpURLConnection.setConnectTimeout(5000);
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.connect();
-
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                outputStream.write(postParameters.getBytes("UTF-8"));
-                outputStream.flush();
-                outputStream.close();
-
-                int responseStatusCode = httpURLConnection.getResponseCode();
-                Log.d(TAG, "POST response code - " + responseStatusCode);
-
-                InputStream inputStream;
-                if (responseStatusCode == HttpURLConnection.HTTP_OK) {
-                    inputStream = httpURLConnection.getInputStream();
-                } else {
-                    inputStream = httpURLConnection.getErrorStream();
-                }
-
-
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
-                StringBuilder sb = new StringBuilder();
-                String line = null;
-
-                while ((line = bufferedReader.readLine()) != null) {
-                    sb.append(line);
-                }
-
-
-                bufferedReader.close();
-
-
-                return sb.toString();
-
-
-            } catch (Exception e) {
-
-                Log.d(TAG, "InsertData: Error ", e);
-
-                return new String("Error: " + e.getMessage());
+            if (s!= null){
+                Log.e("pay Result",s);
+                //Log.e("test",s);
+                Gson gson = new Gson();
+//                MyPageData myPageData = gson.fromJson(s, MyPageData.class); //GSON으로 변환
+                Toast.makeText(mContext, "등록이 완료되었습니다.", Toast.LENGTH_SHORT).show();
+                finish();
+//                Intent intent = new Intent(getApplicationContext(), MainMypage.class);
+//                intent.putExtra("myPageData",myPageData);
+//                startActivity(intent);
+            }else {
+                Log.e("payErr","err");
+                Toast.makeText(mContext, "Error", Toast.LENGTH_SHORT).show();
             }
 
+
+        }
+
+        @Override
+        protected String doInBackground(String... strings){
+            RequestBody formBody = new FormBody.Builder()
+                    .add("id",strings[0])
+                    .add("time",strings[1])
+                    .build();
+
+            Request request = new Request.Builder()
+                    .url(url)
+                    .post(formBody)
+                    .build();
+
+            OkHttpClient client = new OkHttpClient();
+
+            try{
+                Response response = client.newCall(request).execute();
+                return response.body().string();
+            }catch (IOException e){
+                e.printStackTrace();
+                return null;
+            }
         }
     }
 }

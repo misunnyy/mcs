@@ -60,6 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:background="#B0AEE6FF"
+            android:text="test"
             android:hint="ID를 입력하세요."
             android:textSize="15dp"
             android:padding="10dp"
@@ -72,7 +73,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:background="#B0AEE6FF"
+            android:text="!@#$asdf1234"
             android:hint="패스워드를 입력하세요."
+            android:inputType="textPassword"
             android:textSize="15dp"
             android:padding="10dp"
             android:gravity="center"/>
@@ -114,16 +117,27 @@
             android:background="#D7C0FF"
             android:layout_marginTop="20dp"/>
 
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:id="@+id/textView_main_result" />
+        <CheckBox
+            android:id="@+id/cb_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="로그인 정보 기억하기" />
 
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/BtnUser"
@@ -132,20 +146,20 @@
             android:layout_gravity="center"
             android:layout_marginLeft="25dp"
             android:background="#FFFFFF"
-            android:src="@drawable/user"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"
+            android:src="@drawable/user" />
 
         <ImageButton
             android:id="@+id/BtnReservation"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginLeft="30dp"
             android:layout_gravity="center"
+            android:layout_marginLeft="30dp"
             android:background="#FFFFFF"
-            android:src="@drawable/calendar"
             android:scaleType="fitCenter"
-            android:textColor="#000000"
-            android:text="예약" />
+            android:src="@drawable/calendar"
+            android:text="예약"
+            android:textColor="#000000" />
 
         <ImageButton
             android:id="@+id/BtnHome"
@@ -154,8 +168,8 @@
             android:layout_gravity="center"
             android:layout_marginLeft="30dp"
             android:background="#FFFFFF"
-            android:src="@drawable/home"
-            android:scaleType="fitCenter"/>
+            android:scaleType="fitCenter"
+            android:src="@drawable/home" />
 
         <ImageButton
             android:id="@+id/BtnMap"
@@ -164,8 +178,8 @@
             android:layout_gravity="center"
             android:layout_marginLeft="30dp"
             android:background="#FFFFFF"
-            android:src="@drawable/place"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"
+            android:src="@drawable/place" />
 
         <ImageButton
             android:id="@+id/BtnEct"

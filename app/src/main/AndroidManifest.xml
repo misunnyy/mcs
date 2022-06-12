@@ -3,6 +3,7 @@
     package="com.manlesscafe.cafe2">
 
     <uses-permission android:name="android.permission.INTERNET" />  //인터넷 접근을 위한 추가
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:usesCleartextTraffic="true"
@@ -12,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Cafe2">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainLogin">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,9 +22,8 @@
         </activity>
         <activity android:name=".MainReservation" />
         <activity android:name=".MainEct"/>
-        <activity android:name=".MainLogin"/>
+        <activity android:name=".MainActivity"/>
         <activity android:name=".MainMap"/>
-        <activity android:name=".DaytimeActivity"/>
         <activity android:name=".TicketBuyActivity"/>
         <activity android:name=".MainRegister"/>
         <activity android:name=".MainMypage"/>
@@ -31,6 +31,7 @@
         <activity android:name=".InformationFindActivity" />
         <activity android:name=".UsageHistoryActivity"/>
         <activity android:name=".ReserveCompleteActivity"/>
+        <activity android:name=".CreateQR"/>
     </application>
 
 </manifest>

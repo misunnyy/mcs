@@ -18,6 +18,7 @@ public class PayCompleteActivity extends Activity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
 
+
         String time = bundle.getString("reservetime");
 
         reserveTime.setText(time);
